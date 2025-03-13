@@ -1,0 +1,38 @@
+﻿<Page x:Class="BankShibaevaAnna322.BranchesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BankShibaevaAnna322"
+      mc:Ignorable="d"
+      Title="BranchesPage" Height="398" Width="758">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Row="0" Name="ListViewBranches" Margin="10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Название филиала" Width="auto" DisplayMemberBinding="{Binding BranchName}" />
+                    <GridViewColumn Header="Адрес" Width="auto" DisplayMemberBinding="{Binding Address}" />
+                    <GridViewColumn Width="120">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Name="ButtonEditBranch" Content="Редактировать" Click="ButtonEditBranch_OnClick" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Кнопки для управления филиалами -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Name="ButtonAddBranch" Content="Добавить филиал" Click="ButtonAddBranch_OnClick" Width="150" Margin="5"/>
+            <Button Name="ButtonDelBranch" Content="Удалить филиал" Click="ButtonDelBranch_OnClick" Width="150" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Page>

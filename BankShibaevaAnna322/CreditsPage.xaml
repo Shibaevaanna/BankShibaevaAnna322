@@ -1,0 +1,39 @@
+﻿<Page x:Class="BankShibaevaAnna322.CreditsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BankShibaevaAnna322"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CreditsPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0" Name="DataGridLoans" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Название кредита" Binding="{Binding NameOfLoan}" Width="*" />
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" Width="100" />
+                <DataGridTextColumn Header="Процентная ставка" Binding="{Binding InterestRate}" Width="120" />
+                <DataGridTextColumn Header="Срок" Binding="{Binding Duration}" Width="100" />
+                <DataGridTemplateColumn Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="ButtonEditLoan" Content="Редактировать" Click="ButtonEditLoan_OnClick" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Name="ButtonEditLoan" Content="Редактировать" Click="ButtonEditLoan_OnClick" Width="150" Margin="5"/>
+            <Button Name="ButtonAddLoan" Content="Добавить кредит" Click="ButtonAddLoan_OnClick" Width="133" Margin="5"/>
+            <Button Name="ButtonDelLoan" Content="Удалить кредит" Click="ButtonDelLoan_OnClick" Width="133" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Page>
