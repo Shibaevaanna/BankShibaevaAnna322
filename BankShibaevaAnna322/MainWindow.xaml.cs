@@ -16,25 +16,9 @@ namespace BankShibaevaAnna322
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(loginTextBox.Text) || string.IsNullOrEmpty(passwordBox.Password))
+            bool isAuthenticated = Auth(loginTextBox.Text, passwordBox.Password);
+            if (isAuthenticated)
             {
-                MessageBox.Show("Введите логин и пароль");
-                return;
-            }
-
-            string hashedPassword = GetHash(passwordBox.Password);
-
-            using (var db = new Entities())
-            {
-                var user = db.Users.AsNoTracking().FirstOrDefault(u => u.UserLogin == loginTextBox.Text && u.UserPassword == hashedPassword);
-
-                if (user == null)
-                {
-                    MessageBox.Show("Пользователь не найден");
-                    return;
-                }
-
-
                 var userDashboard = new UserDashboard();
                 userDashboard.Show();
                 this.Close();
@@ -46,6 +30,30 @@ namespace BankShibaevaAnna322
             var registrationWindow = new RegistrationWindow();
             registrationWindow.Show();
             this.Close();
+        }
+
+        public bool Auth(string login, string password)
+        {
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Введите логин и пароль");
+                return false;
+            }
+
+            string hashedPassword = GetHash(password);
+
+            using (var db = new Entities())
+            {
+                var user = db.Users.AsNoTracking().FirstOrDefault(u => u.UserLogin == login && u.UserPassword == hashedPassword);
+
+                if (user == null)
+                {
+                    MessageBox.Show("Пользователь не найден");
+                    return false;
+                }
+            }
+
+            return true; // Аутентификация успешна
         }
 
         private string GetHash(string input)
