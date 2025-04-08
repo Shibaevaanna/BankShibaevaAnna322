@@ -6,7 +6,13 @@
       xmlns:local="clr-namespace:BankShibaevaAnna322"
       mc:Ignorable="d"
       Title="BranchesPage" Height="398" Width="758">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -31,8 +37,8 @@
 
         <!-- Кнопки для управления филиалами -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Name="ButtonAddBranch" Content="Добавить филиал" Click="ButtonAddBranch_OnClick" Width="150" Margin="5"/>
-            <Button Name="ButtonDelBranch" Content="Удалить филиал" Click="ButtonDelBranch_OnClick" Width="150" Margin="5"/>
+            <Button Name="ButtonAddBranch" Content="Добавить филиал" Click="ButtonAddBranch_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Name="ButtonDelBranch" Content="Удалить филиал" Click="ButtonDelBranch_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

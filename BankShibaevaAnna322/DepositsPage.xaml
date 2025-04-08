@@ -7,6 +7,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DepositsPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -31,9 +38,9 @@
 
         <!-- Кнопки для управления вкладами -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Name="ButtonEditDeposit" Content="Редактировать" Click="ButtonEditDeposit_OnClick" Width="150" Margin="5"/>
-            <Button Name="ButtonAddDeposit" Content="Добавить вклад" Click="ButtonAddDeposit_OnClick" Width="150" Margin="5"/>
-            <Button Name="ButtonDelDeposit" Content="Удалить вклад" Click="ButtonDelDeposit_OnClick" Width="150" Margin="5"/>
+            <Button Name="ButtonEditDeposit" Content="Редактировать" Click="ButtonEditDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Name="ButtonAddDeposit" Content="Добавить вклад" Click="ButtonAddDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Name="ButtonDelDeposit" Content="Удалить вклад" Click="ButtonDelDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

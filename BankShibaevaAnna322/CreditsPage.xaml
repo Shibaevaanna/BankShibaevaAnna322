@@ -7,7 +7,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CreditsPage">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -31,9 +37,9 @@
         </DataGrid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Name="ButtonEditLoan" Content="Редактировать" Click="ButtonEditLoan_OnClick" Width="150" Margin="5"/>
-            <Button Name="ButtonAddLoan" Content="Добавить кредит" Click="ButtonAddLoan_OnClick" Width="133" Margin="5"/>
-            <Button Name="ButtonDelLoan" Content="Удалить кредит" Click="ButtonDelLoan_OnClick" Width="133" Margin="5"/>
+            <Button Name="ButtonEditLoan" Content="Редактировать" Click="ButtonEditLoan_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Name="ButtonAddLoan" Content="Добавить кредит" Click="ButtonAddLoan_OnClick" Width="133" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Name="ButtonDelLoan" Content="Удалить кредит" Click="ButtonDelLoan_OnClick" Width="133" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

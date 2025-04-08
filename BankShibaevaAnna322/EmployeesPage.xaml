@@ -7,7 +7,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="EmployeesPage">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -30,9 +36,9 @@
 
         <!-- Кнопки для управления сотрудниками -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Name="ButtonEditEmployee" Content="Редактировать" Click="ButtonEditEmployee_OnClick" Width="150" Margin="5"/>
-            <Button Name="ButtonAddEmployee" Content="Добавить сотрудника" Click="ButtonAddEmployee_OnClick" Width="150" Margin="5"/>
-            <Button Name="ButtonDelEmployee" Content="Удалить сотрудника" Click="ButtonDelEmployee_OnClick" Width="150" Margin="5"/>
+            <Button Name="ButtonEditEmployee" Content="Редактировать" Click="ButtonEditEmployee_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Name="ButtonAddEmployee" Content="Добавить сотрудника" Click="ButtonAddEmployee_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Name="ButtonDelEmployee" Content="Удалить сотрудника" Click="ButtonDelEmployee_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

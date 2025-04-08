@@ -12,6 +12,11 @@
     </Window.Resources>
 
     <Grid Background="{StaticResource BackgroundBrush}" Margin="0,40,-88,-47">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="452*"/>
+            <ColumnDefinition Width="35*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -25,30 +30,30 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Text="Регистрация" Grid.Row="0" HorizontalAlignment="Center" 
-                   Style="{StaticResource HeaderTextStyle}" Margin="0,20,0,20"/>
+        <TextBlock Text="Регистрация" Grid.Row="0" HorizontalAlignment="Left" 
+                   Style="{StaticResource HeaderTextStyle}" Margin="171,20,0,20"/>
 
-        <Label Content="Имя:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" 
+        <Label Content="Имя:" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" 
                Style="{StaticResource CustomLabelStyle}"/>
         <TextBox x:Name="nameTextBox" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="138" Margin="106,0,0,0" 
                  Style="{StaticResource CustomTextBoxStyle}" Height="29"/>
 
-        <Label Content="Фамилия:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" 
+        <Label Content="Фамилия:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" 
                Style="{StaticResource CustomLabelStyle}"/>
-        <TextBox x:Name="surnameTextBox" Grid.Row="2" VerticalAlignment="Top" Margin="106,9,244,0" 
+        <TextBox x:Name="surnameTextBox" Grid.Row="2" VerticalAlignment="Center" Margin="106,0,208,0" 
                  Style="{StaticResource CustomTextBoxStyle}" Height="29"/>
 
-        <Label Content="Отчество:" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" 
+        <Label Content="Отчество:" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" 
                Style="{StaticResource CustomLabelStyle}"/>
-        <TextBox x:Name="patronymicTextBox" Grid.Row="3" VerticalAlignment="Center" Width="138"  Margin="106,0,244,0" 
+        <TextBox x:Name="patronymicTextBox" Grid.Row="3" VerticalAlignment="Center" Width="138"  Margin="106,0,208,0" 
                  Style="{StaticResource CustomTextBoxStyle}" Height="29"/>
 
-        <Label Content="Логин:" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" 
+        <Label Content="Логин:" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" 
                Style="{StaticResource CustomLabelStyle}"/>
         <TextBox x:Name="loginTextBox" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" Width="138" Margin="106,0,0,0" 
                  Style="{StaticResource CustomTextBoxStyle}" Height="29"/>
 
-        <Label Content="Пароль:" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" 
+        <Label Content="Пароль:" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" 
                Style="{StaticResource CustomLabelStyle}"/>
         <PasswordBox x:Name="passwordBox" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" Width="138" Margin="106,0,0,0" Height="29"/>
 
@@ -56,9 +61,9 @@
                Style="{StaticResource CustomLabelStyle}" Width="111"/>
         <PasswordBox x:Name="confirmPasswordBox" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Width="138" Margin="106,0,0,0" Height="29"/>
 
-        <Button Content="Зарегистрироваться" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center"
+        <Button Content="Зарегистрироваться" Grid.Row="8" HorizontalAlignment="Left"
                 VerticalAlignment="Center" Width="150" Height="30"
-                Margin="10"
+                Margin="169,0,0,0"
                 Click="RegisterButton_Click"
                 Style="{StaticResource CustomButtonStyle}"/>
     </Grid>
