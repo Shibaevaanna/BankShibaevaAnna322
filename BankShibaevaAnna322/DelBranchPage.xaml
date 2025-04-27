@@ -1,0 +1,15 @@
+﻿<Page x:Class="BankShibaevaAnna322.DelBranchPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Удалить филиал" Margin="20">
+
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="Вы действительно хотите удалить этот филиал?" 
+               FontSize="16" TextAlignment="Center" Margin="0,0,0,20"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Удалить" Width="100" Margin="5" Click="ButtonDelete_Click"/>
+            <Button Content="Отмена" Width="100" Margin="5" Click="ButtonCancel_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Page>
+

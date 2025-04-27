@@ -1,44 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BankShibaevaAnna322
 {
-    /// <summary>
-    /// Логика взаимодействия для DepositsPage.xaml
-    /// </summary>
     public partial class DepositsPage : Page
     {
         public DepositsPage()
         {
             InitializeComponent();
+            LoadDeposits();
+            this.IsVisibleChanged += DepositsPage_IsVisibleChanged;
         }
-        private void ButtonEditDeposit_OnClick(object sender, RoutedEventArgs e)
+
+        private void DepositsPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
+            if (Visibility == Visibility.Visible)
+                LoadDeposits();
         }
 
+        private void LoadDeposits()
+        {
+            DataGridDeposits.ItemsSource = null;
+            DataGridDeposits.ItemsSource = Entities.GetContext().Deposits.ToList();
+        }
 
         private void ButtonAddDeposit_OnClick(object sender, RoutedEventArgs e)
         {
+            NavigationService.Navigate(new AddDepositPage());
+        }
 
+        private void ButtonEditDeposit_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (DataGridDeposits.SelectedItem is Deposit deposit)
+                NavigationService.Navigate(new EditDepositPage(deposit));
+            else
+                MessageBox.Show("Выберите вклад для редактирования");
         }
 
         private void ButtonDelDeposit_OnClick(object sender, RoutedEventArgs e)
         {
-
+            if (DataGridDeposits.SelectedItem is Deposit deposit)
+                NavigationService.Navigate(new DelDepositPage(deposit));
+            else
+                MessageBox.Show("Выберите вклад для удаления");
         }
     }
 }
+
 

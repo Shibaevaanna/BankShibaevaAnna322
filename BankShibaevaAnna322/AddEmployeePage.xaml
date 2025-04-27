@@ -1,0 +1,18 @@
+﻿<Page x:Class="BankShibaevaAnna322.AddEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Добавить сотрудника" Margin="20">
+
+    <StackPanel>
+        <Label Content="Имя сотрудника:"/>
+        <TextBox Text="{Binding EmployeeName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+        <Label Content="Должность:"/>
+        <TextBox Text="{Binding Position, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="Сохранить" Width="100" Margin="5" Click="ButtonSaveClick"/>
+            <Button Content="Отмена" Width="100" Margin="5" Click="ButtonCancelClick"/>
+        </StackPanel>
+    </StackPanel>
+
+</Page>

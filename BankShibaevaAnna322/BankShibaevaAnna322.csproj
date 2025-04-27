@@ -70,6 +70,21 @@
     <Compile Include="AccountTypes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="AddBranchPage.xaml.cs">
+      <DependentUpon>AddBranchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddCardPage.xaml.cs">
+      <DependentUpon>AddCardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddCreditPage.xaml.cs">
+      <DependentUpon>AddCreditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddDepositPage.xaml.cs">
+      <DependentUpon>AddDepositPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEmployeePage.xaml.cs">
+      <DependentUpon>AddEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Branches.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -85,14 +100,46 @@
     <Compile Include="Clients.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Credit.cs" />
     <Compile Include="CreditsPage.xaml.cs">
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DelBranchPage.xaml.cs">
+      <DependentUpon>DelBranchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelCardPage.xaml.cs">
+      <DependentUpon>DelCardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelCreditPage.xaml.cs">
+      <DependentUpon>DelCreditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelDepositPage.xaml.cs">
+      <DependentUpon>DelDepositPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DelEmployeePage.xaml.cs">
+      <DependentUpon>DelEmployeePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Deposit.cs" />
     <Compile Include="Deposits.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="DepositsPage.xaml.cs">
       <DependentUpon>DepositsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditBranchPage.xaml.cs">
+      <DependentUpon>EditBranchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditCardPage.xaml.cs">
+      <DependentUpon>EditCardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditCreditPage.xaml.cs">
+      <DependentUpon>EditCreditPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditDepositPage.xaml.cs">
+      <DependentUpon>EditDepositPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditEmployeePage.xaml.cs">
+      <DependentUpon>EditEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Employees.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -142,9 +189,32 @@
     <Compile Include="TransactionTypes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="UserDashboard.xaml.cs">
+      <DependentUpon>UserDashboard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Users.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Page Include="AddBranchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddCardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddCreditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddDepositPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BranchesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -157,7 +227,47 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DelBranchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DelCardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DelCreditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DelDepositPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DelEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DepositsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditBranchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditCardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditCreditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditDepositPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,6 +296,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

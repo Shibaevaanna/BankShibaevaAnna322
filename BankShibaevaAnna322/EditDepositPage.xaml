@@ -1,0 +1,20 @@
+﻿<Page x:Class="BankShibaevaAnna322.EditDepositPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Редактировать вклад" Margin="20">
+    <StackPanel>
+        <Label Content="Название вклада:"/>
+        <TextBox Text="{Binding NameOfDeposit, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+        <Label Content="Сумма:"/>
+        <TextBox Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+        <Label Content="Процентная ставка:"/>
+        <TextBox Text="{Binding InterestRate, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+        <Label Content="Срок (мес):"/>
+        <TextBox Text="{Binding Duration, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+            <Button Content="Сохранить" Width="100" Margin="5" Click="ButtonSave_Click"/>
+            <Button Content="Отмена" Width="100" Margin="5" Click="ButtonCancel_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Page>

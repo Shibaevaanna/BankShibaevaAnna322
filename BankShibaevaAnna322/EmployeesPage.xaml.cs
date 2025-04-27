@@ -1,43 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BankShibaevaAnna322
 {
-    /// <summary>
-    /// Логика взаимодействия для EmployeesPage.xaml
-    /// </summary>
     public partial class EmployeesPage : Page
     {
         public EmployeesPage()
         {
             InitializeComponent();
+            this.IsVisibleChanged += EmployeesPageIsVisibleChanged;
+            DataGridEmployees.ItemsSource = Entities.GetContext().Employees.ToList();
         }
 
-        private void ButtonEditEmployee_OnClick(object sender, RoutedEventArgs e)
+        private void EmployeesPageIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-
+            if (Visibility == Visibility.Visible)
+            {
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
+                DataGridEmployees.ItemsSource = Entities.GetContext().Employees.ToList();
+            }
         }
 
-        private void ButtonAddEmployee_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonAddEmployeeOnClick(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new AddEmployeePage());
         }
 
-        private void ButtonDelEmployee_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonEditEmployeeOnClick(object sender, RoutedEventArgs e)
         {
+            if (DataGridEmployees.SelectedItem is Employees employee)
+                NavigationService.Navigate(new EditEmployeePage(employee));
+            else
+                MessageBox.Show("Выберите сотрудника для редактирования");
+        }
 
+        private void ButtonDelEmployeeOnClick(object sender, RoutedEventArgs e)
+        {
+            if (DataGridEmployees.SelectedItem is Employees employee)
+                NavigationService.Navigate(new DelEmployeePage(employee));
+            else
+                MessageBox.Show("Выберите сотрудника для удаления");
         }
     }
 }

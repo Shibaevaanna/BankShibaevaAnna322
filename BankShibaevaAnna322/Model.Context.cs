@@ -12,25 +12,38 @@ namespace BankShibaevaAnna322
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+
     public partial class Entities : DbContext
     {
+        private static Entities _context;
+
+        
+        public static Entities GetContext()
+        {
+            if (_context == null)
+            {
+                _context = new Entities();
+            }
+            return _context;
+        }
+
         public Entities()
             : base("name=Entities")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
         }
-    
+
         public virtual DbSet<Accounts> Accounts { get; set; }
         public virtual DbSet<AccountTypes> AccountTypes { get; set; }
         public virtual DbSet<Branches> Branches { get; set; }
         public virtual DbSet<Cards> Cards { get; set; }
+        public virtual DbSet<Credit> Credits { get; set; }
         public virtual DbSet<Clients> Clients { get; set; }
-        public virtual DbSet<Deposits> Deposits { get; set; }
+        public virtual DbSet<Deposit> Deposits { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<LoanPayments> LoanPayments { get; set; }
         public virtual DbSet<Loans> Loans { get; set; }

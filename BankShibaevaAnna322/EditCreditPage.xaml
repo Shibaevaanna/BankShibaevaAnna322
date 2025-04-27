@@ -1,0 +1,27 @@
+﻿<Page x:Class="BankShibaevaAnna322.EditCreditPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Редактировать кредит">
+    <Grid Margin="10">
+        <StackPanel Width="400" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <TextBlock Text="Название кредита:" />
+            <TextBox Name="TextBoxName" Margin="0,5" />
+
+            <TextBlock Text="Сумма:" />
+            <TextBox Name="TextBoxAmount" Margin="0,5" />
+
+            <TextBlock Text="Процентная ставка:" />
+            <TextBox Name="TextBoxInterestRate" Margin="0,5" />
+
+            <TextBlock Text="Срок (месяцев):" />
+            <TextBox Name="TextBoxDuration" Margin="0,5" />
+            <TextBlock Text="Описание:" />
+            <TextBox Name="TextBoxDescription" Margin="0,5" Height="80" AcceptsReturn="True" TextWrapping="Wrap" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10">
+                <Button Content="Сохранить" Click="ButtonSave_Click" Width="100" Margin="10,0" />
+                <Button Content="Отмена" Click="ButtonCancel_Click" Width="100" Margin="10,0" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
