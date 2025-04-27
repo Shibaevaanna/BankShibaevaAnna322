@@ -7,12 +7,12 @@ namespace BankShibaevaAnna322
 {
     public partial class EditEmployeePage : Page
     {
-        private Employees employee; // Объявляем переменную employee
+        private Employees employee; 
 
         public EditEmployeePage(Employees selectedEmployee)
         {
             InitializeComponent();
-            this.employee = Entities.GetContext().Employees.Find(selectedEmployee.EmployeeId);
+            this.employee = Entities.GetContext().Employees.Find(employee.EmployeeId);
             if (this.employee == null)
             {
                 MessageBox.Show("Сотрудник не найден");

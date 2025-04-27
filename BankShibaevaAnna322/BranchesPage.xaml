@@ -5,29 +5,31 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BankShibaevaAnna322"
       mc:Ignorable="d"
-      Title="BranchesPage" Height="398" Width="758">
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
+      Title="BranchesPage" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0" Name="ListViewBranches" Margin="10">
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="10">
+            <TextBox x:Name="SearchBranchName" Width="200" TextChanged="SearchBranchName_TextChanged" />
+            <TextBlock Text="Введите название филиала" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="14"/>
+            <TextBox x:Name="SearchAddress" Width="200" TextChanged="SearchAddress_TextChanged" />
+            <TextBlock Text="Введите адрес" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="14"/>
+            <Button Content="Очистить фильтр" FontSize="10" Click="ClearFilter_OnClick" Margin="10,0,0,0"/>
+        </WrapPanel>
+
+        <ListView Grid.Row="1" Name="ListViewBranches" Margin="10" SelectionMode="Single">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Название филиала" Width="auto" DisplayMemberBinding="{Binding BranchName}" />
-                    <GridViewColumn Header="Адрес" Width="auto" DisplayMemberBinding="{Binding Address}" />
+                    <GridViewColumn Header="Название филиала" Width="250" DisplayMemberBinding="{Binding BranchName}" />
+                    <GridViewColumn Header="Адрес" Width="300" DisplayMemberBinding="{Binding Address}" />
                     <GridViewColumn Width="120">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Name="ButtonEditBranch" Content="Редактировать" Click="ButtonEditBranch_OnClick" />
+                                <Button Content="Редактировать" Click="ButtonEditBranch_OnClick" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -35,10 +37,9 @@
             </ListView.View>
         </ListView>
 
-        <!-- Кнопки для управления филиалами -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Name="ButtonAddBranch" Content="Добавить филиал" Click="ButtonAddBranch_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Name="ButtonDelBranch" Content="Удалить филиал" Click="ButtonDelBranch_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Добавить филиал" Click="ButtonAddBranch_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Удалить филиал" Click="ButtonDelBranch_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

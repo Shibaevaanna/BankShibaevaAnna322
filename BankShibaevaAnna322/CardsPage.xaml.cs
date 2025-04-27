@@ -1,31 +1,16 @@
-﻿using BankShibaevaAnna322;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BankShibaevaAnna322
 {
-    /// &lt;summary&gt;
-    /// Логика взаимодействия для CardsPage.xaml
-    /// &lt;/summary&gt;
     public partial class CardsPage : Page
     {
         public CardsPage()
         {
             InitializeComponent();
             this.IsVisibleChanged += CardsPage_IsVisibleChanged;
-            DataGridCards.ItemsSource = Entities.GetContext().Cards.ToList();
+            UpdateCards();
         }
 
         private void CardsPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -33,16 +18,52 @@ namespace BankShibaevaAnna322
             if (Visibility == Visibility.Visible)
             {
                 Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
-                DataGridCards.ItemsSource = Entities.GetContext().Cards.ToList();
+                UpdateCards();
             }
         }
 
-        private void ButtonAddCard_OnClick(object sender, RoutedEventArgs e)
+        private void UpdateCards()
+        {
+            var cards = Entities.GetContext().Cards.ToList();
+
+            if (!string.IsNullOrWhiteSpace(SearchCardNumber.Text))
+            {
+                string searchText = SearchCardNumber.Text.ToLower();
+                cards = cards.Where(c => c.CardNumber.ToLower().Contains(searchText)).ToList();
+            }
+
+            if (FilterCardType.SelectedIndex > 0)
+            {
+                string selectedType = ((ComboBoxItem)FilterCardType.SelectedItem).Content.ToString();
+                cards = cards.Where(c => c.CardType == selectedType).ToList();
+            }
+
+            DataGridCards.ItemsSource = cards;
+        }
+
+        private void SearchCardNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            UpdateCards();
+        }
+
+        private void FilterCardType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateCards();
+        }
+
+        private void ClearFilter_OnClick(object sender, RoutedEventArgs e)
+        {
+            SearchCardNumber.Text = "";
+            FilterCardType.SelectedIndex = 0;
+            UpdateCards();
+        }
+
+        private void ButtonAddCardOnClick(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AddCardPage());
         }
 
-        private void ButtonEditCard_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonEditCardOnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridCards.SelectedItem is Cards card)
                 NavigationService.Navigate(new EditCardPage(card));
@@ -50,7 +71,7 @@ namespace BankShibaevaAnna322
                 MessageBox.Show("Выберите карту для редактирования");
         }
 
-        private void ButtonDelCard_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonDelCardOnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridCards.SelectedItem is Cards card)
                 NavigationService.Navigate(new DelCardPage(card));

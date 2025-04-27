@@ -7,40 +7,54 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DepositsPage">
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Name="DataGridDeposits" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="10">
+            <TextBox x:Name="SearchDepositName" Width="150" TextChanged="SearchDepositName_TextChanged" />
+            <TextBlock Text="Введите название вклада" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="14"/>
+            <ComboBox x:Name="FilterDuration" Width="150" SelectionChanged="FilterDuration_SelectionChanged" Margin="0,0,10,0">
+                <ComboBoxItem Content="Все" IsSelected="True"/>
+                <ComboBoxItem Content="6 месяцев"/>
+                <ComboBoxItem Content="12 месяцев"/>
+                <ComboBoxItem Content="24 месяца"/>
+                <ComboBoxItem Content="36 месяцев"/>
+            </ComboBox>
+            <TextBlock Text="Фильтровать по сроку" VerticalAlignment="Center" FontSize="14"/>
+            <ComboBox x:Name="SortBy" Width="150" SelectionChanged="SortBy_SelectionChanged" Margin="10,0,0,0">
+                <ComboBoxItem Content="Без сортировки" IsSelected="True"/>
+                <ComboBoxItem Content="По сумме (по возрастанию)"/>
+                <ComboBoxItem Content="По сумме (по убыванию)"/>
+                <ComboBoxItem Content="По процентной ставке (по возрастанию)"/>
+                <ComboBoxItem Content="По процентной ставке (по убыванию)"/>
+            </ComboBox>
+            <Button Content="Очистить фильтр" FontSize="10" Click="ClearFilter_OnClick" Margin="10,0,0,0"/>
+        </WrapPanel>
+
+        <DataGrid Grid.Row="1" Name="DataGridDeposits" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название вклада" Binding="{Binding NameOfDeposit}" Width="*" />
-                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" Width="*" />
-                <DataGridTextColumn Header="Процентная ставка" Binding="{Binding InterestRate}" Width="*" />
-                <DataGridTextColumn Header="Срок" Binding="{Binding Duration}" Width="*" />
+                <DataGridTextColumn Header="Название вклада" Binding="{Binding NameOfDeposit}" Width="*"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" Width="100"/>
+                <DataGridTextColumn Header="Процентная ставка" Binding="{Binding InterestRate}" Width="120"/>
+                <DataGridTextColumn Header="Срок" Binding="{Binding Duration}" Width="100"/>
                 <DataGridTemplateColumn Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="ButtonEditDeposit" Content="Редактировать" Click="ButtonEditDeposit_OnClick" />
+                            <Button Content="Редактировать" Click="ButtonEditDeposit_OnClick"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- Кнопки для управления вкладами -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Name="ButtonEditDeposit" Content="Редактировать" Click="ButtonEditDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Name="ButtonAddDeposit" Content="Добавить вклад" Click="ButtonAddDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Name="ButtonDelDeposit" Content="Удалить вклад" Click="ButtonDelDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Редактировать" Click="ButtonEditDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Добавить вклад" Click="ButtonAddDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Удалить вклад" Click="ButtonDelDeposit_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

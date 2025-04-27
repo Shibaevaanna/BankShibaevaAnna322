@@ -16,30 +16,53 @@
     </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height=""/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Row="0" Name="DataGridLoans" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
+        <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="10">
+            <TextBox x:Name="SearchLoanName" Width="150" TextChanged="SearchLoanName_TextChanged" />
+            <TextBlock Text="Введите название кредита" VerticalAlignment="Center" Margin="5,0,10,0" FontSize="14"/>
+            <ComboBox x:Name="FilterDuration" Width="150" SelectionChanged="FilterDuration_SelectionChanged" Margin="0,0,10,0">
+                <ComboBoxItem Content="Все" IsSelected="True"/>
+                <ComboBoxItem Content="6 месяцев"/>
+                <ComboBoxItem Content="12 месяцев"/>
+                <ComboBoxItem Content="24 месяца"/>
+                <ComboBoxItem Content="36 месяцев"/>
+            </ComboBox>
+            <TextBlock Text="Фильтровать по сроку" VerticalAlignment="Center" FontSize="14"/>
+            <ComboBox x:Name="SortBy" Width="150" SelectionChanged="SortBy_SelectionChanged" Margin="10,0,0,0">
+                <ComboBoxItem Content="Без сортировки" IsSelected="True"/>
+                <ComboBoxItem Content="По сумме (по возрастанию)"/>
+                <ComboBoxItem Content="По сумме (по убыванию)"/>
+                <ComboBoxItem Content="По процентной ставке (по возрастанию)"/>
+                <ComboBoxItem Content="По процентной ставке (по убыванию)"/>
+            </ComboBox>
+            <Button x:Name="ClearFilter" Content="Очистить фильтр" FontSize="10" Click="ClearFilter_OnClick" Margin="10,0,0,0"/>
+        </WrapPanel>
+
+        <DataGrid Grid.Row="1" Name="DataGridLoans" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название кредита" Binding="{Binding NameOfLoan}" Width="*" />
-                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" Width="100" />
-                <DataGridTextColumn Header="Процентная ставка" Binding="{Binding InterestRate}" Width="120" />
-                <DataGridTextColumn Header="Срок" Binding="{Binding Duration}" Width="100" />
+                <DataGridTextColumn Header="Название кредита" Binding="{Binding NameOfLoan}" Width=""/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" Width="100"/>
+                <DataGridTextColumn Header="Процентная ставка" Binding="{Binding InterestRate}" Width="120"/>
+                <DataGridTextColumn Header="Срок" Binding="{Binding Duration}" Width="100"/>
                 <DataGridTemplateColumn Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Name="ButtonEditLoan" Content="Редактировать" Click="ButtonEditLoan_OnClick" />
+                            <Button Content="Редактировать" Click="ButtonEditLoanOnClick"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Name="ButtonEditLoan" Content="Редактировать" Click="ButtonEditLoan_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Name="ButtonAddLoan" Content="Добавить кредит" Click="ButtonAddLoan_OnClick" Width="133" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Name="ButtonDelLoan" Content="Удалить кредит" Click="ButtonDelLoan_OnClick" Width="133" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button Content="Редактировать" Click="ButtonEditLoanOnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Добавить кредит" Click="ButtonAddLoanOnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Удалить кредит" Click="ButtonDelLoanOnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>
+

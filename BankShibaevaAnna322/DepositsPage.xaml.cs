@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace BankShibaevaAnna322
 {
@@ -10,28 +10,93 @@ namespace BankShibaevaAnna322
         public DepositsPage()
         {
             InitializeComponent();
-            LoadDeposits();
             this.IsVisibleChanged += DepositsPage_IsVisibleChanged;
+            LoadDeposits();
         }
 
-        private void DepositsPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void DepositsPageIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)
+            {
+                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
                 LoadDeposits();
+            }
         }
 
         private void LoadDeposits()
         {
-            DataGridDeposits.ItemsSource = null;
-            DataGridDeposits.ItemsSource = Entities.GetContext().Deposits.ToList();
+            var deposits = Entities.GetContext().Deposits.ToList();
+
+            if (!string.IsNullOrWhiteSpace(SearchDepositName.Text))
+            {
+                string searchText = SearchDepositName.Text.ToLower();
+                deposits = deposits.Where(d => d.NameOfDeposit.ToLower().Contains(searchText)).ToList();
+            }
+
+            if (FilterDuration.SelectedIndex > 0)
+            {
+                string selectedDuration = ((ComboBoxItem)FilterDuration.SelectedItem).Content.ToString();
+                int durationMonths = 0;
+                if (selectedDuration.Contains("месяц"))
+                {
+                    string numberPart = new string(selectedDuration.Where(char.IsDigit).ToArray());
+                    int.TryParse(numberPart, out durationMonths);
+                }
+                deposits = deposits.Where(d => d.Duration == durationMonths).ToList();
+            }
+
+            if (SortBy.SelectedIndex > 0)
+            {
+                var sortOption = ((ComboBoxItem)SortBy.SelectedItem).Content.ToString();
+                switch (sortOption)
+                {
+                    case "По сумме (по возрастанию)":
+                        deposits = deposits.OrderBy(d => d.Amount).ToList();
+                        break;
+                    case "По сумме (по убыванию)":
+                        deposits = deposits.OrderByDescending(d => d.Amount).ToList();
+                        break;
+                    case "По процентной ставке (по возрастанию)":
+                        deposits = deposits.OrderBy(d => d.InterestRate).ToList();
+                        break;
+                    case "По процентной ставке (по убыванию)":
+                        deposits = deposits.OrderByDescending(d => d.InterestRate).ToList();
+                        break;
+                }
+            }
+
+            DataGridDeposits.ItemsSource = deposits;
         }
 
-        private void ButtonAddDeposit_OnClick(object sender, RoutedEventArgs e)
+        private void SearchDepositNameTextChanged(object sender, TextChangedEventArgs e)
+        {
+            LoadDeposits();
+        }
+
+        private void FilterDurationSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadDeposits();
+        }
+
+        private void SortBySelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            LoadDeposits();
+        }
+
+        private void ClearFilterOnClick(object sender, RoutedEventArgs e)
+        {
+            SearchDepositName.Text = "";
+            FilterDuration.SelectedIndex = 0;
+            SortBy.SelectedIndex = 0;
+            LoadDeposits();
+        }
+
+        private void ButtonAddDepositOnClick(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AddDepositPage());
         }
 
-        private void ButtonEditDeposit_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonEditDepositOnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridDeposits.SelectedItem is Deposit deposit)
                 NavigationService.Navigate(new EditDepositPage(deposit));
@@ -39,7 +104,7 @@ namespace BankShibaevaAnna322
                 MessageBox.Show("Выберите вклад для редактирования");
         }
 
-        private void ButtonDelDeposit_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonDelDepositOnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridDeposits.SelectedItem is Deposit deposit)
                 NavigationService.Navigate(new DelDepositPage(deposit));
@@ -48,5 +113,3 @@ namespace BankShibaevaAnna322
         }
     }
 }
-
-
