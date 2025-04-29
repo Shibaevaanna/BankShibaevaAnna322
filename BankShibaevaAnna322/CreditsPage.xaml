@@ -17,7 +17,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height=""/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -51,7 +51,7 @@
                 <DataGridTemplateColumn Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Редактировать" Click="ButtonEditLoanOnClick"/>
+                            <Button Content="Редактировать" Click="ButtonEditLoan_OnClick"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -59,9 +59,9 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Редактировать" Click="ButtonEditLoanOnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Content="Добавить кредит" Click="ButtonAddLoanOnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Content="Удалить кредит" Click="ButtonDelLoanOnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Редактировать" Click="ButtonEditLoan_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Добавить кредит" Click="ButtonAddLoan_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Удалить кредит" Click="ButtonDelLoan_OnClick" Width="150" Margin="5" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

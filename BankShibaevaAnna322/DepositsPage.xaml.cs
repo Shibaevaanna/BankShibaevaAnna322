@@ -83,7 +83,7 @@ namespace BankShibaevaAnna322
             LoadDeposits();
         }
 
-        private void ClearFilterOnClick(object sender, RoutedEventArgs e)
+        private void ClearFilter_OnClick(object sender, RoutedEventArgs e)
         {
             SearchDepositName.Text = "";
             FilterDuration.SelectedIndex = 0;
@@ -91,12 +91,12 @@ namespace BankShibaevaAnna322
             LoadDeposits();
         }
 
-        private void ButtonAddDepositOnClick(object sender, RoutedEventArgs e)
+        private void ButtonAddDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AddDepositPage());
         }
 
-        private void ButtonEditDepositOnClick(object sender, RoutedEventArgs e)
+        private void ButtonEditDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridDeposits.SelectedItem is Deposit deposit)
                 NavigationService.Navigate(new EditDepositPage(deposit));
@@ -104,7 +104,7 @@ namespace BankShibaevaAnna322
                 MessageBox.Show("Выберите вклад для редактирования");
         }
 
-        private void ButtonDelDepositOnClick(object sender, RoutedEventArgs e)
+        private void ButtonDelDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridDeposits.SelectedItem is Deposit deposit)
                 NavigationService.Navigate(new DelDepositPage(deposit));
