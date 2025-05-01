@@ -11,7 +11,7 @@ namespace BankShibaevaAnna322
         public DelCardPage(Cards card)
         {
             InitializeComponent();
-            _card = Entities.GetContext().Cards.Find(card.Id);
+            _card = Entities.GetContext().Cards.Find(card.CardID);
             if (_card == null)
             {
                 MessageBox.Show("Карта не найдена");

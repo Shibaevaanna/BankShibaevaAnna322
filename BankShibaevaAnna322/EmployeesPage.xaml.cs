@@ -32,7 +32,7 @@ namespace BankShibaevaAnna322
             if (!string.IsNullOrWhiteSpace(SearchEmployeeName.Text))
             {
                 string searchText = SearchEmployeeName.Text.ToLower();
-                employees = employees.Where(emp => emp.EmployeeName.ToLower().Contains(searchText)).ToList();
+                employees = employees.Where(emp => emp.FirstName.ToLower().Contains(searchText)).ToList();
             }
 
             if (FilterPosition.SelectedIndex > 0)

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace BankShibaevaAnna322
 {
@@ -9,28 +10,37 @@ namespace BankShibaevaAnna322
         public RegistrationWindow()
         {
             InitializeComponent();
+            LoadRoles();
         }
 
-        private void RegisterButton_Click(object sender, RoutedEventArgs e)
+        private void LoadRoles()
         {
+            using (var db = new Entities())
+            {
+                var roles = db.Roles.ToList();
+                roleComboBox.ItemsSource = roles;
+                if (roles.Any())
+                    roleComboBox.SelectedIndex = 0;
+            }
+        }
 
-            string name = nameTextBox.Text;
-            string surname = surnameTextBox.Text;
-            string patronymic = patronymicTextBox.Text;
-            string login = loginTextBox.Text;
+        private void RegisterButtonClick(object sender, RoutedEventArgs e)
+        {
+            string name = nameTextBox.Text.Trim();
+            string surname = surnameTextBox.Text.Trim();
+            string patronymic = patronymicTextBox.Text.Trim();
+            string login = loginTextBox.Text.Trim();
             string password = passwordBox.Password;
             string confirmPassword = confirmPasswordBox.Password;
+            var selectedRole = roleComboBox.SelectedItem as Roles;
 
-            if (string.IsNullOrWhiteSpace(name) ||
-                string.IsNullOrWhiteSpace(surname) ||
-                string.IsNullOrWhiteSpace(login) ||
-                string.IsNullOrWhiteSpace(password) ||
-                string.IsNullOrWhiteSpace(confirmPassword))
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(surname) ||
+                string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password) ||
+                string.IsNullOrWhiteSpace(confirmPassword) || selectedRole == null)
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
 
             if (password != confirmPassword)
             {
@@ -38,44 +48,41 @@ namespace BankShibaevaAnna322
                 return;
             }
 
+            string hashedPassword = GetHash(password);
 
-            User newUser = new User
+            using (var db = new Entities())
             {
-                Name = name,
-                Surname = surname,
-                Patronymic = patronymic,
-                Login = login,
-                Password = password
-            };
+                if (db.Users.Any(u => u.UserLogin == login))
+                {
+                    MessageBox.Show("Пользователь с таким логином уже существует.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
+                var user = new Users()
+                {
+                    UserLogin = login,
+                    UserPassword = hashedPassword,
+                    RoleID = selectedRole.RoleID
+                };
 
-            bool isSaved = SaveUser(newUser);
-
-            if (isSaved)
-            {
-                MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                this.Close();
+                db.Users.Add(user);
+                db.SaveChanges();
             }
-            else
-            {
-                MessageBox.Show("Ошибка при регистрации. Попробуйте еще раз.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
+            MessageBox.Show("Регистрация прошла успешно!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            this.Close();
         }
 
-        private bool SaveUser(User user)
+        private string GetHash(string input)
         {
-
-            return true;
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                var builder = new StringBuilder();
+                foreach (var b in bytes)
+                    builder.Append(b.ToString("x2"));
+                return builder.ToString();
+            }
         }
-    }
-
-    public class User
-    {
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Patronymic { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
     }
 }
-

@@ -10,7 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
@@ -37,7 +37,7 @@
 
         <DataGrid Grid.Row="1" Name="DataGridDeposits" AutoGenerateColumns="False" IsReadOnly="True" Margin="10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Название вклада" Binding="{Binding NameOfDeposit}" Width="*"/>
+                <DataGridTextColumn Header="Название вклада" Binding="{Binding NameOfDeposit}" Width=""/>
                 <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}" Width="100"/>
                 <DataGridTextColumn Header="Процентная ставка" Binding="{Binding InterestRate}" Width="120"/>
                 <DataGridTextColumn Header="Срок" Binding="{Binding Duration}" Width="100"/>
@@ -58,3 +58,4 @@
         </StackPanel>
     </Grid>
 </Page>
+

@@ -19,7 +19,7 @@ namespace BankShibaevaAnna322
         {
             var errors = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(employee.EmployeeName))
+            if (string.IsNullOrWhiteSpace(employee.FirstName))
                 errors.AppendLine("Введите имя сотрудника");
 
             if (string.IsNullOrWhiteSpace(employee.Position))

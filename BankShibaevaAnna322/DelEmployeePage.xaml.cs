@@ -11,7 +11,7 @@ namespace BankShibaevaAnna322
         public DelEmployeePage(Employees employee)
         {
             InitializeComponent();
-            employee = Entities.GetContext().Employees.Find(employee.Id);
+            employee = Entities.GetContext().Employees.Find(employee.EmployeeID);
             if (employee == null)
             {
                 MessageBox.Show("Сотрудник не найден");

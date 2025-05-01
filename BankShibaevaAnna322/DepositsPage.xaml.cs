@@ -14,7 +14,7 @@ namespace BankShibaevaAnna322
             LoadDeposits();
         }
 
-        private void DepositsPageIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void DepositsPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (Visibility == Visibility.Visible)
             {
@@ -68,22 +68,22 @@ namespace BankShibaevaAnna322
             DataGridDeposits.ItemsSource = deposits;
         }
 
-        private void SearchDepositNameTextChanged(object sender, TextChangedEventArgs e)
+        private void SearchDepositName_TextChanged(object sender, TextChangedEventArgs e)
         {
             LoadDeposits();
         }
 
-        private void FilterDurationSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void FilterDuration_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadDeposits();
         }
 
-        private void SortBySelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadDeposits();
         }
 
-        private void ClearFilterOnClick(object sender, RoutedEventArgs e)
+        private void ClearFilter_OnClick(object sender, RoutedEventArgs e)
         {
             SearchDepositName.Text = "";
             FilterDuration.SelectedIndex = 0;
@@ -91,12 +91,12 @@ namespace BankShibaevaAnna322
             LoadDeposits();
         }
 
-        private void ButtonAddDepositOnClick(object sender, RoutedEventArgs e)
+        private void ButtonAddDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new AddDepositPage());
         }
 
-        private void ButtonEditDepositOnClick(object sender, RoutedEventArgs e)
+        private void ButtonEditDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridDeposits.SelectedItem is Deposit deposit)
                 NavigationService.Navigate(new EditDepositPage(deposit));
@@ -104,7 +104,7 @@ namespace BankShibaevaAnna322
                 MessageBox.Show("Выберите вклад для редактирования");
         }
 
-        private void ButtonDelDepositOnClick(object sender, RoutedEventArgs e)
+        private void ButtonDelDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             if (DataGridDeposits.SelectedItem is Deposit deposit)
                 NavigationService.Navigate(new DelDepositPage(deposit));

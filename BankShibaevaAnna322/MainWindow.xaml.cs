@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.Windows.Controls;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace BankShibaevaAnna322
 {
@@ -16,12 +15,64 @@ namespace BankShibaevaAnna322
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            bool isAuthenticated = Auth(loginTextBox.Text, passwordBox.Password);
-            if (isAuthenticated)
+            string login = loginTextBox.Text.Trim();
+            string password = passwordBox.Password;
+            string selectedRole = ((ComboBoxItem)roleComboBox.SelectedItem).Content.ToString();
+
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
-                var userDashboard = new UserDashboard();
-                userDashboard.Show();
-                this.Close();
+                MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string hashedPassword = GetHash(password);
+
+            using (var db = new Entities())
+            {
+                var user = db.Users.Where(u => u.UserLogin == login && u.UserPassword == hashedPassword).FirstOrDefault();
+
+                if (user == null)
+                {
+                    MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Получаем роль из навигационного свойства
+                string userRole = user.Roles?.RoleName;
+                if (userRole != selectedRole)
+                {
+                    MessageBox.Show("Выбранная роль не соответствует роли пользователя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (userRole == "Администратор")
+                {
+                    var adminDashboard = new AdminDashboard();
+                    adminDashboard.Show();
+                    this.Close();
+                }
+                else if (userRole == "Пользователь")
+                {
+                    var userDashboard = new UserDashboard();
+                    userDashboard.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Неизвестная роль пользователя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private string GetHash(string input)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                var builder = new StringBuilder();
+                foreach (var b in bytes)
+                    builder.Append(b.ToString("x2"));
+                return builder.ToString();
             }
         }
 
@@ -30,44 +81,6 @@ namespace BankShibaevaAnna322
             var registrationWindow = new RegistrationWindow();
             registrationWindow.Show();
             this.Close();
-        }
-
-        public bool Auth(string login, string password)
-        {
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-            {
-                MessageBox.Show("Введите логин и пароль");
-                return false;
-            }
-
-            string hashedPassword = GetHash(password);
-
-            using (var db = new Entities())
-            {
-                var user = db.Users.AsNoTracking().FirstOrDefault(u => u.UserLogin == login && u.UserPassword == hashedPassword);
-
-                if (user == null)
-                {
-                    MessageBox.Show("Пользователь не найден");
-                    return false;
-                }
-            }
-
-            return true; // Аутентификация успешна
-        }
-
-        private string GetHash(string input)
-        {
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
         }
     }
 }

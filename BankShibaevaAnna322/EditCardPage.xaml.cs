@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,7 +12,7 @@ namespace BankShibaevaAnna322
         public EditCardPage(Cards card)
         {
             InitializeComponent();
-            _card = Entities.GetContext().Cards.Find(card.Id);
+            _card = Entities.GetContext().Cards.Find(card.CardID);
             if (_card == null)
             {
                 MessageBox.Show("Карта не найдена");

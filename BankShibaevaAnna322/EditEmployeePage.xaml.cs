@@ -2,17 +2,18 @@
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace BankShibaevaAnna322
 {
     public partial class EditEmployeePage : Page
     {
-        private Employees employee; 
+        private Employees employee;
 
         public EditEmployeePage(Employees selectedEmployee)
         {
             InitializeComponent();
-            this.employee = Entities.GetContext().Employees.Find(employee.EmployeeId);
+            this.employee = Entities.GetContext().Employees.Find(selectedEmployee.EmployeeID);
             if (this.employee == null)
             {
                 MessageBox.Show("Сотрудник не найден");
@@ -26,7 +27,7 @@ namespace BankShibaevaAnna322
         {
             var errors = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(employee.Name))
+            if (string.IsNullOrWhiteSpace(employee.FirstName))
                 errors.AppendLine("Введите имя сотрудника");
 
             if (string.IsNullOrWhiteSpace(employee.Position))
@@ -48,6 +49,12 @@ namespace BankShibaevaAnna322
             {
                 MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void ButtonCancel_Click(object sender, RoutedEventArgs e)
+        {
+            // Отмена и возврат к предыдущей странице без сохранения
+            NavigationService.GoBack();
         }
     }
 }

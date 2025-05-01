@@ -2,12 +2,11 @@
 
 namespace BankShibaevaAnna322
 {
-    public partial class UserDashboard : Window
+    public partial class AdminDashboard : Window
     {
-        public UserDashboard()
+        public AdminDashboard()
         {
             InitializeComponent();
         }
     }
 }
-
