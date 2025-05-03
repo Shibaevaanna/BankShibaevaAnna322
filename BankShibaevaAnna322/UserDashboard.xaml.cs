@@ -42,12 +42,12 @@ namespace BankShibaevaAnna322
 
         private void TransfersMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new TransfersPage(_userId));
+            MainFrame.Navigate(new TransferWindow(_userId));
         }
 
         private void PaymentsMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new PaymentsPage(_userId));
+            MainFrame.Navigate(new MakePaymentWindow(_userId));
         }
 
         private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
