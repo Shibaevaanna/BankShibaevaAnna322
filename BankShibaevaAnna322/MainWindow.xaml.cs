@@ -17,7 +17,6 @@ namespace BankShibaevaAnna322
         {
             string login = loginTextBox.Text.Trim();
             string password = passwordBox.Password;
-            string selectedRole = ((ComboBoxItem)roleComboBox.SelectedItem).Content.ToString();
 
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
@@ -29,7 +28,7 @@ namespace BankShibaevaAnna322
 
             using (var db = new Entities())
             {
-                var user = db.Users.Where(u => u.UserLogin == login && u.UserPassword == hashedPassword).FirstOrDefault();
+                var user = db.Users.Include("Roles").FirstOrDefault(u => u.UserLogin == login && u.UserPassword == hashedPassword);
 
                 if (user == null)
                 {
@@ -37,23 +36,15 @@ namespace BankShibaevaAnna322
                     return;
                 }
 
-                // Получаем роль из навигационного свойства
-                string userRole = user.Roles?.RoleName;
-                if (userRole != selectedRole)
-                {
-                    MessageBox.Show("Выбранная роль не соответствует роли пользователя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                if (userRole == "Администратор")
+                if (user.Roles.RoleName == "Администратор")
                 {
                     var adminDashboard = new AdminDashboard();
                     adminDashboard.Show();
                     this.Close();
                 }
-                else if (userRole == "Пользователь")
+                else if (user.Roles.RoleName == "Пользователь")
                 {
-                    var userDashboard = new UserDashboard();
+                    var userDashboard = new UserDashboard(user.UserID);
                     userDashboard.Show();
                     this.Close();
                 }
@@ -84,4 +75,3 @@ namespace BankShibaevaAnna322
         }
     }
 }
-

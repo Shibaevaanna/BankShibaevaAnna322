@@ -1,0 +1,55 @@
+﻿<Page x:Class="BankShibaevaAnna322.AccountDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Детали счета">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Детали счета" Grid.Row="0" Grid.ColumnSpan="2" 
+                   Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+
+        <Label Content="Номер счета:" Grid.Row="1" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="AccountNumberText" Grid.Row="1" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Тип счета:" Grid.Row="2" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="AccountTypeText" Grid.Row="2" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Баланс:" Grid.Row="3" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="BalanceText" Grid.Row="3" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Статус:" Grid.Row="4" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="StatusText" Grid.Row="4" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Button Content="Пополнить счет" Grid.Row="5" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="DepositButton_Click" 
+                Style="{StaticResource CustomButtonStyle}" Margin="0,20,0,10"/>
+
+        <Button Content="Перевести средства" Grid.Row="6" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="TransferButton_Click" 
+                Style="{StaticResource CustomButtonStyle}" Margin="0,0,0,10"/>
+
+        <Button Content="Закрыть счет" Grid.Row="7" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="CloseAccountButton_Click" 
+                Style="{StaticResource CustomButtonStyle}"/>
+    </Grid>
+</Page>

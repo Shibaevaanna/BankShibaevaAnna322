@@ -1,0 +1,40 @@
+﻿<Page x:Class="BankShibaevaAnna322.UserCardsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Мои карты">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="67"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Мои карты" Grid.Row="0" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+
+        <DataGrid x:Name="CardsDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер карты" Binding="{Binding CardNumber}" Width="*"/>
+                <DataGridTextColumn Header="Тип карты" Binding="{Binding CardType}" Width="*"/>
+                <DataGridTextColumn Header="Срок действия" Binding="{Binding ExpiryDate, StringFormat={}{0:MM/yy}}" Width="*"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding CardStatus}" Width="*"/>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Детали" Click="DetailsButton_Click" Style="{StaticResource CustomButtonStyle}" Margin="2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Оформить новую карту" Grid.Row="2" HorizontalAlignment="Center" 
+                Click="OrderNewCardButton_Click" Style="{StaticResource CustomButtonStyle}" Width="183"/>
+    </Grid>
+</Page>

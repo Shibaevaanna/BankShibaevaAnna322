@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace BankShibaevaAnna322
 {
@@ -9,74 +10,173 @@ namespace BankShibaevaAnna322
         public CardsPage()
         {
             InitializeComponent();
-            this.IsVisibleChanged += CardsPage_IsVisibleChanged;
-            UpdateCards();
+            LoadClients();
+            LoadAccounts();
+            LoadCards();
         }
 
-        private void CardsPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void LoadClients()
         {
-            if (Visibility == Visibility.Visible)
+            using (var db = new Entities())
             {
-                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
-                UpdateCards();
+                var clients = db.Clients
+                    .Select(c => new
+                    {
+                        c.ClientID,
+                        FullName = c.LastName + " " + c.FirstName + " " + c.Patronymic
+                    })
+                    .ToList();
+
+                ClientFilterComboBox.ItemsSource = clients;
+                ClientFilterComboBox.DisplayMemberPath = "FullName";
+                ClientFilterComboBox.SelectedValuePath = "ClientID";
             }
         }
 
-        private void UpdateCards()
+        private void LoadAccounts(int? clientId = null)
         {
-            var cards = Entities.GetContext().Cards.ToList();
-
-            if (!string.IsNullOrWhiteSpace(SearchCardNumber.Text))
+            using (var db = new Entities())
             {
-                string searchText = SearchCardNumber.Text.ToLower();
-                cards = cards.Where(c => c.CardNumber.ToLower().Contains(searchText)).ToList();
-            }
+                var accountsQuery = db.Accounts.AsQueryable();
 
-            if (FilterCardType.SelectedIndex > 0)
+                if (clientId != null)
+                {
+                    accountsQuery = accountsQuery.Where(a => a.ClientID == clientId);
+                }
+
+                var accounts = accountsQuery
+                    .Select(a => new
+                    {
+                        a.AccountID,
+                        a.AccountNumber
+                    })
+                    .ToList();
+
+                AccountFilterComboBox.ItemsSource = accounts;
+                AccountFilterComboBox.DisplayMemberPath = "AccountNumber";
+                AccountFilterComboBox.SelectedValuePath = "AccountID";
+            }
+        }
+
+        private void LoadCards(int? clientId = null, int? accountId = null)
+        {
+            using (var db = new Entities())
             {
-                string selectedType = ((ComboBoxItem)FilterCardType.SelectedItem).Content.ToString();
-                cards = cards.Where(c => c.CardType == selectedType).ToList();
+                var cardsQuery = db.Cards.Include("Accounts.Clients").AsQueryable();
+
+                if (clientId != null)
+                {
+                    cardsQuery = cardsQuery.Where(c => c.Accounts.ClientID == clientId);
+                }
+
+                if (accountId != null)
+                {
+                    cardsQuery = cardsQuery.Where(c => c.AccountID == accountId);
+                }
+
+                var cards = cardsQuery
+                    .Select(c => new
+                    {
+                        c.CardID,
+                        c.CardNumber,
+                        ClientFullName = c.Accounts.Clients.LastName + " " + c.Accounts.Clients.FirstName + " " + c.Accounts.Clients.Patronymic,
+                        AccountNumber = c.Accounts.AccountNumber,
+                        c.CardType,
+                        c.ExpiryDate,
+                        c.CardStatus
+                    })
+                    .ToList();
+
+                CardsDataGrid.ItemsSource = cards;
             }
-
-            DataGridCards.ItemsSource = cards;
         }
 
-        private void SearchCardNumber_TextChanged(object sender, TextChangedEventArgs e)
+        private void ClientFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UpdateCards();
-        }
-
-        private void FilterCardType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            UpdateCards();
-        }
-
-        private void ClearFilter_OnClick(object sender, RoutedEventArgs e)
-        {
-            SearchCardNumber.Text = "";
-            FilterCardType.SelectedIndex = 0;
-            UpdateCards();
-        }
-
-        private void ButtonAddCardOnClick(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new AddCardPage());
-        }
-
-        private void ButtonEditCardOnClick(object sender, RoutedEventArgs e)
-        {
-            if (DataGridCards.SelectedItem is Cards card)
-                NavigationService.Navigate(new EditCardPage(card));
+            if (ClientFilterComboBox.SelectedItem != null)
+            {
+                dynamic selectedClient = ClientFilterComboBox.SelectedItem;
+                int clientId = selectedClient.ClientID;
+                LoadAccounts(clientId);
+            }
             else
-                MessageBox.Show("Выберите карту для редактирования");
+            {
+                AccountFilterComboBox.ItemsSource = null;
+            }
         }
 
-        private void ButtonDelCardOnClick(object sender, RoutedEventArgs e)
+        private void FilterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGridCards.SelectedItem is Cards card)
-                NavigationService.Navigate(new DelCardPage(card));
+            int? clientId = null;
+            int? accountId = null;
+
+            if (ClientFilterComboBox.SelectedItem != null)
+            {
+                dynamic selectedClient = ClientFilterComboBox.SelectedItem;
+                clientId = selectedClient.ClientID;
+            }
+
+            if (AccountFilterComboBox.SelectedItem != null)
+            {
+                dynamic selectedAccount = AccountFilterComboBox.SelectedItem;
+                accountId = selectedAccount.AccountID;
+            }
+
+            LoadCards(clientId, accountId);
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClientFilterComboBox.SelectedItem = null;
+            AccountFilterComboBox.SelectedItem = null;
+            LoadCards();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddEditCardPage());
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CardsDataGrid.SelectedItem != null)
+            {
+                dynamic selectedCard = CardsDataGrid.SelectedItem;
+                int cardId = selectedCard.CardID;
+                NavigationService.Navigate(new AddEditCardPage(cardId));
+            }
             else
-                MessageBox.Show("Выберите карту для удаления");
+            {
+                MessageBox.Show("Выберите карту для редактирования", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CardsDataGrid.SelectedItem != null)
+            {
+                if (MessageBox.Show("Вы уверены, что хотите удалить эту карту?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    dynamic selectedCard = CardsDataGrid.SelectedItem;
+                    int cardId = selectedCard.CardID;
+
+                    using (var db = new Entities())
+                    {
+                        var card = db.Cards.Find(cardId);
+                        if (card != null)
+                        {
+                            db.Cards.Remove(card);
+                            db.SaveChanges();
+                            LoadCards();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Выберите карту для удаления", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

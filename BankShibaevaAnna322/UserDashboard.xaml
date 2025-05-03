@@ -1,9 +1,37 @@
 ﻿<Window x:Class="BankShibaevaAnna322.UserDashboard"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Пользователь" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+        xmlns:local="clr-namespace:BankShibaevaAnna322"
+        Title="Личный кабинет" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        <TextBlock Text="Добро пожаловать, пользователь!" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Background="{StaticResource PrimaryBrush}" Foreground="White">
+            <MenuItem Header="Мои данные">
+                <MenuItem Header="Профиль" Click="ProfileMenuItem_Click"/>
+                <MenuItem Header="Счета" Click="AccountsMenuItem_Click"/>
+                <MenuItem Header="Карты" Click="CardsMenuItem_Click"/>
+                <MenuItem Header="Кредиты" Click="CreditsMenuItem_Click"/>
+                <MenuItem Header="Вклады" Click="DepositsMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Операции">
+                <MenuItem Header="Переводы" Click="TransfersMenuItem_Click"/>
+                <MenuItem Header="Платежи" Click="PaymentsMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Выход" Click="LogoutMenuItem_Click"/>
+        </Menu>
+
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
 

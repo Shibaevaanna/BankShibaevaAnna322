@@ -79,8 +79,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccountDetailsPage.xaml.cs">
+      <DependentUpon>AccountDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Accounts.cs">
       <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AccountsPage.xaml.cs">
+      <DependentUpon>AccountsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AccountTypes.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -97,11 +103,26 @@
     <Compile Include="AddDepositPage.xaml.cs">
       <DependentUpon>AddDepositPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddEditAccountPage.xaml.cs">
+      <DependentUpon>AddEditAccountPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditCardPage.xaml.cs">
+      <DependentUpon>AddEditCardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditClientPage.xaml.cs">
+      <DependentUpon>AddEditClientPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AddEditCreditPage.xaml.cs">
+      <DependentUpon>AddEditCreditPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddEmployeePage.xaml.cs">
       <DependentUpon>AddEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AdminDashboard.xaml.cs">
       <DependentUpon>AdminDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ApplyForLoanWindow.xaml.cs">
+      <DependentUpon>ApplyForLoanWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Branches.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -109,16 +130,28 @@
     <Compile Include="BranchesPage.xaml.cs">
       <DependentUpon>BranchesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CardDetailsPage.xaml.cs">
+      <DependentUpon>CardDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cards.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="CardsPage.xaml.cs">
       <DependentUpon>CardsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChangePasswordWindow.xaml.cs">
+      <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Clients.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClientsPage.xaml.cs">
+      <DependentUpon>ClientsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Credit.cs" />
+    <Compile Include="CreditDetailsPage.xaml.cs">
+      <DependentUpon>CreditDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CreditsPage.xaml.cs">
       <DependentUpon>CreditsPage.xaml</DependentUpon>
     </Compile>
@@ -138,11 +171,17 @@
       <DependentUpon>DelEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Deposit.cs" />
+    <Compile Include="DepositDetailsPage.xaml.cs">
+      <DependentUpon>DepositDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Deposits.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="DepositsPage.xaml.cs">
       <DependentUpon>DepositsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DepositWindow.xaml.cs">
+      <DependentUpon>DepositWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditBranchPage.xaml.cs">
       <DependentUpon>EditBranchPage.xaml</DependentUpon>
@@ -177,6 +216,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MakePaymentWindow.xaml.cs">
+      <DependentUpon>MakePaymentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -191,6 +233,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="OpenAccountWindow.xaml.cs">
+      <DependentUpon>OpenAccountWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OpenDepositWindow.xaml.cs">
+      <DependentUpon>OpenDepositWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OrderCardWindow.xaml.cs">
+      <DependentUpon>OrderCardWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegistrationWindow.xaml.cs">
       <DependentUpon>RegistrationWindow.xaml</DependentUpon>
@@ -207,12 +258,38 @@
     <Compile Include="TransactionTypes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="TransferWindow.xaml.cs">
+      <DependentUpon>TransferWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserAccountsPage.xaml.cs">
+      <DependentUpon>UserAccountsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserCardsPage.xaml.cs">
+      <DependentUpon>UserCardsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserCreditsPage.xaml.cs">
+      <DependentUpon>UserCreditsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserDashboard.xaml.cs">
       <DependentUpon>UserDashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserDepositsPage.xaml.cs">
+      <DependentUpon>UserDepositsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserProfilePage.xaml.cs">
+      <DependentUpon>UserProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Users.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Page Include="AccountDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AccountsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddBranchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -229,6 +306,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddEditAccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditCardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditClientPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEditCreditPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -237,11 +330,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ApplyForLoanWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BranchesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CardDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CardsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChangePasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClientsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CreditDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -269,7 +382,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DepositDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DepositsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DepositWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,6 +434,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MakePaymentWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OpenAccountWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OpenDepositWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OrderCardWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -321,7 +458,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TransferWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserAccountsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserCardsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserCreditsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserDepositsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserProfilePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

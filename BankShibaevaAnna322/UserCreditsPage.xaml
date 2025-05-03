@@ -1,0 +1,43 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="BankShibaevaAnna322.UserCreditsPage"
+      Title="Мои кредиты" d:DesignHeight="346.88" d:DesignWidth="650.253">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Мои кредиты" Grid.Row="0" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+
+        <DataGrid x:Name="CreditsDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип кредита" Binding="{Binding LoanType}" Width="*"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount, StringFormat=\{0:C\}}" Width="*"/>
+                <DataGridTextColumn Header="Ставка" Binding="{Binding InterestRate, StringFormat=\{0\}%}" Width="*"/>
+                <DataGridTextColumn Header="Срок" Binding="{Binding Duration, StringFormat=\{0\} мес.}" Width="*"/>
+                <DataGridTextColumn Header="Дата начала" Binding="{Binding StartDate, StringFormat=\{0:dd.MM.yyyy\}}" Width="*"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Детали" Click="DetailsButton_Click" Style="{StaticResource CustomButtonStyle}" Margin="2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Оформить новый кредит" Grid.Row="2" HorizontalAlignment="Center" 
+                Click="ApplyForLoanButton_Click" Style="{StaticResource CustomButtonStyle}"/>
+    </Grid>
+</Page>

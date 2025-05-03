@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -12,114 +10,142 @@ namespace BankShibaevaAnna322
         public CreditsPage()
         {
             InitializeComponent();
+            LoadClients();
             LoadCredits();
-            this.IsVisibleChanged += CreditsPage_IsVisibleChanged;
         }
 
-        private void CreditsPage_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void LoadClients()
         {
-            if (Visibility == Visibility.Visible)
+            using (var db = new Entities())
             {
-                Entities.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
-                LoadCredits();
+                var clients = db.Clients
+                    .Select(c => new
+                    {
+                        c.ClientID,
+                        FullName = c.LastName + " " + c.FirstName + " " + c.Patronymic
+                    })
+                    .ToList();
+
+                ClientFilterComboBox.ItemsSource = clients;
+                ClientFilterComboBox.DisplayMemberPath = "FullName";
+                ClientFilterComboBox.SelectedValuePath = "ClientID";
             }
         }
 
-        private void LoadCredits()
+        private void LoadCredits(int? clientId = null, string status = null)
         {
-            var credits = Entities.GetContext().Credits.ToList();
-
-            if (!string.IsNullOrWhiteSpace(SearchLoanName.Text))
+            using (var db = new Entities())
             {
-                string searchText = SearchLoanName.Text.ToLower();
-                credits = credits.Where(c => c.NameOfLoan.ToLower().Contains(searchText)).ToList();
-            }
+                var creditsQuery = db.Loans.Include("Clients").AsQueryable();
 
-            if (FilterDuration.SelectedIndex > 0)
-            {
-                string selectedDuration = ((ComboBoxItem)FilterDuration.SelectedItem).Content.ToString();
-                // Преобразуем строку с длительностью в число месяцев
-                int durationMonths = 0;
-                if (selectedDuration.Contains("месяц"))
+                if (clientId != null)
                 {
-                    string numberPart = new string(selectedDuration.Where(char.IsDigit).ToArray());
-                    int.TryParse(numberPart, out durationMonths);
+                    creditsQuery = creditsQuery.Where(c => c.ClientID == clientId);
                 }
-                credits = credits.Where(c => c.Duration == durationMonths).ToList();
-            }
 
-            if (SortBy.SelectedIndex > 0)
-            {
-                var sortOption = ((ComboBoxItem)SortBy.SelectedItem).Content.ToString();
-                switch (sortOption)
+                if (!string.IsNullOrEmpty(status) && status != "Все")
                 {
-                    case "По сумме (по возрастанию)":
-                        credits = credits.OrderBy(c => c.Amount).ToList();
-                        break;
-                    case "По сумме (по убыванию)":
-                        credits = credits.OrderByDescending(c => c.Amount).ToList();
-                        break;
-                    case "По процентной ставке (по возрастанию)":
-                        credits = credits.OrderBy(c => c.InterestRate).ToList();
-                        break;
-                    case "По процентной ставке (по убыванию)":
-                        credits = credits.OrderByDescending(c => c.InterestRate).ToList();
-                        break;
+                    creditsQuery = creditsQuery.Where(c => c.Status == status);
                 }
+
+                var credits = creditsQuery
+                    .Select(c => new
+                    {
+                        c.LoanID,
+                        ClientFullName = c.Clients.LastName + " " + c.Clients.FirstName + " " + c.Clients.Patronymic,
+                        c.LoanType,
+                        c.Amount,
+                        c.InterestRate,
+                        Duration = c.CreditTerm,
+                        c.StartDate,
+                        Status = c.Status
+                    })
+                    .ToList();
+
+                CreditsDataGrid.ItemsSource = credits;
+            }
+        }
+
+        private void FilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            int? clientId = null;
+            string status = null;
+
+            if (ClientFilterComboBox.SelectedItem != null)
+            {
+                dynamic selectedClient = ClientFilterComboBox.SelectedItem;
+                clientId = selectedClient.ClientID;
             }
 
-            DataGridLoans.ItemsSource = credits;
-        }
-
-        private void SearchLoanName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            LoadCredits();
-        }
-
-        private void FilterDuration_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LoadCredits();
-        }
-
-        private void SortBy_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            LoadCredits();
-        }
-
-        private void ClearFilter_OnClick(object sender, RoutedEventArgs e)
-        {
-            SearchLoanName.Text = "";
-            FilterDuration.SelectedIndex = 0;
-            SortBy.SelectedIndex = 0;
-            LoadCredits();
-        }
-
-        private void ButtonAddLoan_OnClick(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new AddCreditPage());
-        }
-
-        private void ButtonEditLoan_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (DataGridLoans.SelectedItem is Credit selectedCredit)
+            if (StatusFilterComboBox.SelectedItem != null)
             {
-                NavigationService.Navigate(new EditCreditPage(selectedCredit));
+                status = ((ComboBoxItem)StatusFilterComboBox.SelectedItem).Content.ToString();
+            }
+
+            LoadCredits(clientId, status);
+        }
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            ClientFilterComboBox.SelectedItem = null;
+            StatusFilterComboBox.SelectedIndex = 0;
+            LoadCredits();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AddEditCreditPage());
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CreditsDataGrid.SelectedItem != null)
+            {
+                dynamic selectedCredit = CreditsDataGrid.SelectedItem;
+                int creditId = selectedCredit.LoanID;
+                NavigationService.Navigate(new AddEditCreditPage(creditId));
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите кредит для редактирования", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Выберите кредит для редактирования", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        private void ButtonDelLoan_OnClick(object sender, RoutedEventArgs e)
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGridLoans.SelectedItem is Credit selectedCredit)
+            if (CreditsDataGrid.SelectedItem != null)
             {
-                NavigationService.Navigate(new DelCreditPage(selectedCredit));
+                if (MessageBox.Show("Вы уверены, что хотите удалить этот кредит?", "Подтверждение",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    dynamic selectedCredit = CreditsDataGrid.SelectedItem;
+                    int creditId = selectedCredit.LoanID;
+
+                    using (var db = new Entities())
+                    {
+                        var credit = db.Loans.Find(creditId);
+                        if (credit != null)
+                        {
+                            // Проверяем, есть ли платежи по кредиту
+                            bool hasPayments = db.LoanPayments.Any(p => p.LoanID == creditId);
+
+                            if (hasPayments)
+                            {
+                                MessageBox.Show("Нельзя удалить кредит с платежами",
+                                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return;
+                            }
+
+                            db.Loans.Remove(credit);
+                            db.SaveChanges();
+                            LoadCredits();
+                        }
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выберите кредит для удаления", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Выберите кредит для удаления", "Информация", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

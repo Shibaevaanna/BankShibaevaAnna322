@@ -1,0 +1,54 @@
+﻿<Page x:Class="BankShibaevaAnna322.CardDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Детали карты">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Детали карты" Grid.Row="0" Grid.ColumnSpan="2" 
+                   Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+
+        <Label Content="Номер карты:" Grid.Row="1" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="CardNumberText" Grid.Row="1" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Тип карты:" Grid.Row="2" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="CardTypeText" Grid.Row="2" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Владелец:" Grid.Row="3" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="OwnerText" Grid.Row="3" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Срок действия:" Grid.Row="4" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="ExpiryDateText" Grid.Row="4" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Статус:" Grid.Row="5" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="StatusText" Grid.Row="5" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Button Content="Заблокировать карту" Grid.Row="6" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="BlockCardButton_Click" 
+                Style="{StaticResource CustomButtonStyle}" Margin="0,20,0,10"/>
+
+        <Button Content="Закрыть карту" Grid.Row="7" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="CloseCardButton_Click" 
+                Style="{StaticResource CustomButtonStyle}"/>
+    </Grid>
+</Page>

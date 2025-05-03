@@ -1,0 +1,58 @@
+﻿<Page x:Class="BankShibaevaAnna322.CreditDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Детали кредита">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Детали кредита" Grid.Row="0" Grid.ColumnSpan="2" 
+                   Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+
+        <Label Content="Тип кредита:" Grid.Row="1" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="LoanTypeText" Grid.Row="1" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Сумма:" Grid.Row="2" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="AmountText" Grid.Row="2" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Процентная ставка:" Grid.Row="3" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="InterestRateText" Grid.Row="3" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Срок:" Grid.Row="4" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="DurationText" Grid.Row="4" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Дата начала:" Grid.Row="5" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="StartDateText" Grid.Row="5" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Статус:" Grid.Row="6" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="StatusText" Grid.Row="6" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Button Content="Внести платеж" Grid.Row="7" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="MakePaymentButton_Click" 
+                Style="{StaticResource CustomButtonStyle}" Margin="0,20,0,10"/>
+
+        <Button Content="Погасить досрочно" Grid.Row="8" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="EarlyRepaymentButton_Click" 
+                Style="{StaticResource CustomButtonStyle}"/>
+    </Grid>
+</Page>

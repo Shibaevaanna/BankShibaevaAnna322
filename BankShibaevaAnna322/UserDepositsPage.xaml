@@ -1,0 +1,42 @@
+﻿<Page x:Class="BankShibaevaAnna322.UserDepositsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Мои вклады" Height="358.794" Width="619.255">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Мои вклады" Grid.Row="0" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+
+        <DataGrid x:Name="DepositsDataGrid" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип вклада" Binding="{Binding DepositType}" Width="*"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount, StringFormat={}{0:C}}" Width="*"/>
+                <DataGridTextColumn Header="Ставка" Binding="{Binding InterestRate, StringFormat={}{0}%}" Width="*"/>
+                <DataGridTextColumn Header="Срок" Binding="{Binding Duration, StringFormat={}{0} мес.}" Width="*"/>
+                <DataGridTextColumn Header="Дата окончания" Binding="{Binding MaturityDate, StringFormat={}{0:dd.MM.yyyy}}" Width="*"/>
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="*"/>
+                <DataGridTemplateColumn Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Детали" Click="DetailsButton_Click" Style="{StaticResource CustomButtonStyle}" Margin="2"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Content="Открыть новый вклад" Grid.Row="2" HorizontalAlignment="Center" 
+                Click="OpenNewDepositButton_Click" Style="{StaticResource CustomButtonStyle}"/>
+    </Grid>
+</Page>

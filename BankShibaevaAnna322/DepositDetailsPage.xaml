@@ -1,0 +1,57 @@
+﻿<Page x:Class="BankShibaevaAnna322.DepositDetailsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Детали вклада">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Детали вклада" Grid.Row="0" Grid.ColumnSpan="2" 
+                   Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
+
+        <Label Content="Тип вклада:" Grid.Row="1" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="DepositTypeText" Grid.Row="1" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Сумма:" Grid.Row="2" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="AmountText" Grid.Row="2" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Процентная ставка:" Grid.Row="3" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="InterestRateText" Grid.Row="3" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Срок:" Grid.Row="4" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="DurationText" Grid.Row="4" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Дата открытия:" Grid.Row="5" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="StartDateText" Grid.Row="5" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Дата окончания:" Grid.Row="6" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="MaturityDateText" Grid.Row="6" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Label Content="Статус:" Grid.Row="7" Grid.Column="0" Style="{StaticResource CustomLabelStyle}"/>
+        <TextBlock x:Name="StatusText" Grid.Row="7" Grid.Column="1" Style="{StaticResource BodyTextStyle}"/>
+
+        <Button Content="Закрыть вклад" Grid.Row="8" Grid.ColumnSpan="2" 
+                HorizontalAlignment="Center" Width="150" Click="CloseDepositButton_Click" 
+                Style="{StaticResource CustomButtonStyle}" Margin="0,20,0,0"/>
+    </Grid>
+</Page>
