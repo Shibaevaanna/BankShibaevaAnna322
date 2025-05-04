@@ -20,6 +20,13 @@ namespace BankShibaevaAnna322
         public Nullable<int> InterestRate { get; set; }
         public Nullable<System.DateTime> MaturityDate { get; set; }
         public string DepositStatus { get; set; }
+        public string DepositName { get; set; }
+        public string DepositType { get; set; }
+        public Nullable<int> Duration { get; set; }
+        public string Status { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public string NameOfDeposit { get; set; }
     
         public virtual Clients Clients { get; set; }
     }

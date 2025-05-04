@@ -20,17 +20,25 @@
         <TextBlock Text="Управление вкладами" Grid.Row="0" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
 
         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20">
-            <ComboBox x:Name="ClientFilterComboBox" Width="200" Margin="0,0,10,0" DisplayMemberPath="FullName"/>
-            <ComboBox x:Name="StatusFilterComboBox" Width="150" Margin="0,0,10,0">
-                <ComboBoxItem Content="Все" IsSelected="True"/>
-                <ComboBoxItem Content="Активен"/>
-                <ComboBoxItem Content="Закрыт"/>
+            <TextBox x:Name="SearchDepositName" Width="200" Margin="0,0,10,0" TextChanged="SearchDepositName_TextChanged"/>
+            <ComboBox x:Name="FilterDuration" Width="150" Margin="0,0,10,0" SelectionChanged="FilterDuration_SelectionChanged">
+                <ComboBoxItem Content="Все сроки" IsSelected="True"/>
+                <ComboBoxItem Content="3 месяца"/>
+                <ComboBoxItem Content="6 месяцев"/>
+                <ComboBoxItem Content="12 месяцев"/>
+                <ComboBoxItem Content="24 месяца"/>
             </ComboBox>
-            <Button Content="Фильтр" Width="80" Click="FilterButton_Click" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Content="Сброс" Width="80" Margin="10,0,0,0" Click="ResetButton_Click" Style="{StaticResource CustomButtonStyle}"/>
+            <ComboBox x:Name="SortBy" Width="200" Margin="0,0,10,0" SelectionChanged="SortBy_SelectionChanged">
+                <ComboBoxItem Content="Без сортировки" IsSelected="True"/>
+                <ComboBoxItem Content="По сумме (по возрастанию)"/>
+                <ComboBoxItem Content="По сумме (по убыванию)"/>
+                <ComboBoxItem Content="По процентной ставке (по возрастанию)"/>
+                <ComboBoxItem Content="По процентной ставке (по убыванию)"/>
+            </ComboBox>
+            <Button Content="Сброс" Width="80" Margin="10,0,0,0" Click="ClearFilter_OnClick" Style="{StaticResource CustomButtonStyle}"/>
         </WrapPanel>
 
-        <DataGrid x:Name="DepositsDataGrid" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
+        <DataGrid x:Name="DataGridDeposits" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,0,0,20">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Клиент" Binding="{Binding ClientFullName}" Width="*"/>
                 <DataGridTextColumn Header="Тип вклада" Binding="{Binding DepositType}" Width="*"/>
@@ -50,8 +58,8 @@
         </DataGrid>
 
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Добавить вклад" Width="150" Margin="5" Click="AddButton_Click" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Content="Удалить вклад" Width="150" Margin="5" Click="DeleteButton_Click" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Добавить вклад" Width="150" Margin="5" Click="ButtonAddDeposit_OnClick" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Удалить вклад" Width="150" Margin="5" Click="ButtonDelDeposit_OnClick" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище BankOperationsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище BankOperationsModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Accounts">
           <Key>
             <PropertyRef Name="AccountID" />
@@ -15,6 +15,7 @@
           <Property Name="AccountType" Type="varchar" MaxLength="20" />
           <Property Name="Balance" Type="int" />
           <Property Name="AccountStatus" Type="varchar" MaxLength="20" />
+          <Property Name="OpenDate" Type="date" />
         </EntityType>
         <EntityType Name="AccountTypes">
           <Key>
@@ -32,6 +33,7 @@
           <Property Name="Address" Type="varchar" MaxLength="20" />
           <Property Name="PhoneNumber" Type="int" />
           <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="Id" Type="int" />
         </EntityType>
         <EntityType Name="Cards">
           <Key>
@@ -44,6 +46,7 @@
           <Property Name="CardNumber" Type="int" />
           <Property Name="ExpiryDate" Type="date" />
           <Property Name="CardStatus" Type="varchar" MaxLength="20" />
+          <Property Name="CardType" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -57,6 +60,7 @@
           <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
           <Property Name="SecondNumber" Type="varchar" MaxLength="20" />
           <Property Name="Email" Type="varchar" MaxLength="30" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Deposits">
           <Key>
@@ -68,6 +72,13 @@
           <Property Name="InterestRate" Type="int" />
           <Property Name="MaturityDate" Type="date" />
           <Property Name="DepositStatus" Type="varchar" MaxLength="20" />
+          <Property Name="DepositName" Type="varchar" MaxLength="20" />
+          <Property Name="DepositType" Type="nvarchar" MaxLength="50" />
+          <Property Name="Duration" Type="int" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="NameOfDeposit" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -102,6 +113,11 @@
           <Property Name="StartDate" Type="date" />
           <Property Name="ClientSalary" Type="int" />
           <Property Name="PaymentAmount" Type="int" />
+          <Property Name="LoanName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoanSum" Type="nvarchar" MaxLength="50" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
+          <Property Name="EndDate" Type="date" />
         </EntityType>
         <EntityType Name="LoanTypes">
           <Key>
@@ -135,6 +151,8 @@
           <Property Name="AccountID" Type="int" />
           <Property Name="TransactionTypeID" Type="int" />
           <Property Name="TransactionType" Type="varchar" MaxLength="20" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TransactionDate" Type="datetime" />
         </EntityType>
         <EntityType Name="TransactionTypes">
           <Key>
@@ -151,6 +169,8 @@
           <Property Name="UserLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserPassword" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="RoleID" Type="int" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
         </EntityType>
         <Association Name="FK__Accounts__Client__440B1D61">
           <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
@@ -224,6 +244,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Users_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище BankOperationsModelContainer">
           <EntitySet Name="Accounts" EntityType="Self.Accounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountTypes" EntityType="Self.AccountTypes" Schema="dbo" store:Type="Tables" />
@@ -264,9 +296,12 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Clients" Association="Self.FK_Users_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BankOperationsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -283,6 +318,7 @@
           <NavigationProperty Name="Clients" Relationship="Self.FK__Accounts__Client__440B1D61" FromRole="Accounts" ToRole="Clients" />
           <NavigationProperty Name="Cards" Relationship="Self.FK__Cards__AccountID__71D1E811" FromRole="Accounts" ToRole="Cards" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Accou__49C3F6B7" FromRole="Accounts" ToRole="Transactions" />
+          <Property Name="OpenDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="AccountTypes">
           <Key>
@@ -301,6 +337,7 @@
           <Property Name="PhoneNumber" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__Branc__571DF1D5" FromRole="Branches" ToRole="Employees" />
+          <Property Name="Id" Type="Int32" />
         </EntityType>
         <EntityType Name="Cards">
           <Key>
@@ -314,6 +351,7 @@
           <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
           <Property Name="CardStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Cards__AccountID__71D1E811" FromRole="Cards" ToRole="Accounts" />
+          <Property Name="CardType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -329,6 +367,8 @@
           <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Accounts__Client__440B1D61" FromRole="Clients" ToRole="Accounts" />
           <NavigationProperty Name="Deposits" Relationship="Self.FK__Deposits__Client__74AE54BC" FromRole="Clients" ToRole="Deposits" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="BankOperationsModel.FK_Users_Clients" FromRole="Clients" ToRole="Users" />
         </EntityType>
         <EntityType Name="Deposits">
           <Key>
@@ -341,6 +381,13 @@
           <Property Name="MaturityDate" Type="DateTime" Precision="0" />
           <Property Name="DepositStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Clients" Relationship="Self.FK__Deposits__Client__74AE54BC" FromRole="Deposits" ToRole="Clients" />
+          <Property Name="DepositName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DepositType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Duration" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="NameOfDeposit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -376,6 +423,11 @@
           <Property Name="StartDate" Type="DateTime" Precision="0" />
           <Property Name="ClientSalary" Type="Int32" />
           <Property Name="PaymentAmount" Type="Int32" />
+          <Property Name="LoanName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoanSum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EndDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="LoanTypes">
           <Key>
@@ -411,6 +463,8 @@
           <Property Name="TransactionTypeID" Type="Int32" />
           <Property Name="TransactionType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Transacti__Accou__49C3F6B7" FromRole="Transactions" ToRole="Accounts" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TransactionDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TransactionTypes">
           <Key>
@@ -428,6 +482,9 @@
           <Property Name="UserPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RoleID" Type="Int32" />
           <NavigationProperty Name="Roles" Relationship="Self.FK__Users__RoleID__0E6E26BF" FromRole="Users" ToRole="Roles" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="ClientID" Type="Int32" />
+          <NavigationProperty Name="Clients" Relationship="BankOperationsModel.FK_Users_Clients" FromRole="Users" ToRole="Clients" />
         </EntityType>
         <Association Name="FK__Accounts__Client__440B1D61">
           <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
@@ -541,7 +598,23 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Clients" Association="BankOperationsModel.FK_Users_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Users_Clients">
+          <End Type="BankOperationsModel.Clients" Role="Clients" Multiplicity="0..1" />
+          <End Type="BankOperationsModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ClientID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -551,6 +624,7 @@
           <EntitySetMapping Name="Accounts">
             <EntityTypeMapping TypeName="BankOperationsModel.Accounts">
               <MappingFragment StoreEntitySet="Accounts">
+                <ScalarProperty Name="OpenDate" ColumnName="OpenDate" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
@@ -571,6 +645,7 @@
           <EntitySetMapping Name="Branches">
             <EntityTypeMapping TypeName="BankOperationsModel.Branches">
               <MappingFragment StoreEntitySet="Branches">
+                <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="BranchID" ColumnName="BranchID" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -582,6 +657,7 @@
           <EntitySetMapping Name="Cards">
             <EntityTypeMapping TypeName="BankOperationsModel.Cards">
               <MappingFragment StoreEntitySet="Cards">
+                <ScalarProperty Name="CardType" ColumnName="CardType" />
                 <ScalarProperty Name="CardID" ColumnName="CardID" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="OwnerFirstName" ColumnName="OwnerFirstName" />
@@ -595,6 +671,7 @@
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="BankOperationsModel.Clients">
               <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -609,6 +686,13 @@
           <EntitySetMapping Name="Deposits">
             <EntityTypeMapping TypeName="BankOperationsModel.Deposits">
               <MappingFragment StoreEntitySet="Deposits">
+                <ScalarProperty Name="NameOfDeposit" ColumnName="NameOfDeposit" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="DepositType" ColumnName="DepositType" />
+                <ScalarProperty Name="DepositName" ColumnName="DepositName" />
                 <ScalarProperty Name="DepositID" ColumnName="DepositID" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
                 <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
@@ -644,6 +728,11 @@
           <EntitySetMapping Name="Loans">
             <EntityTypeMapping TypeName="BankOperationsModel.Loans">
               <MappingFragment StoreEntitySet="Loans">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="LoanSum" ColumnName="LoanSum" />
+                <ScalarProperty Name="LoanName" ColumnName="LoanName" />
                 <ScalarProperty Name="LoanID" ColumnName="LoanID" />
                 <ScalarProperty Name="LoanType" ColumnName="LoanType" />
                 <ScalarProperty Name="ClientID" ColumnName="ClientID" />
@@ -685,6 +774,8 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="BankOperationsModel.Transactions">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
                 <ScalarProperty Name="AccountID" ColumnName="AccountID" />
                 <ScalarProperty Name="TransactionTypeID" ColumnName="TransactionTypeID" />
@@ -703,6 +794,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="BankOperationsModel.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
                 <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />

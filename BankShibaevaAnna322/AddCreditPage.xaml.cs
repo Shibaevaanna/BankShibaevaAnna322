@@ -46,7 +46,7 @@ namespace BankShibaevaAnna322
                 _credit.Duration = int.Parse(TextBoxDuration.Text);
                 _credit.Description = TextBoxDescription.Text;
 
-                Entities.GetContext().Credits.Add(_credit);
+                Entities.GetContext().Loans.Add(_loan);
                 Entities.GetContext().SaveChanges();
 
                 MessageBox.Show("Кредит успешно добавлен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);

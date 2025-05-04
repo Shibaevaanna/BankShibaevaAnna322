@@ -11,7 +11,7 @@ namespace BankShibaevaAnna322
         public DelDepositPage(Deposit deposit)
         {
             InitializeComponent();
-            _deposit = Entities.GetContext().Deposits.Find(deposit.Id);
+            _deposit = Entities.GetContext().Deposits.Find(deposits.Id);
             if (_deposit == null)
             {
                 MessageBox.Show("Вклад не найден");

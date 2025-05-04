@@ -18,6 +18,8 @@ namespace BankShibaevaAnna322
         public Nullable<int> AccountID { get; set; }
         public Nullable<int> TransactionTypeID { get; set; }
         public string TransactionType { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public Nullable<System.DateTime> TransactionDate { get; set; }
     
         public virtual Accounts Accounts { get; set; }
     }

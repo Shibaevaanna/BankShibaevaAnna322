@@ -19,6 +19,7 @@ namespace BankShibaevaAnna322
         {
             this.Accounts = new HashSet<Accounts>();
             this.Deposits = new HashSet<Deposits>();
+            this.Users = new HashSet<Users>();
         }
     
         public int ClientID { get; set; }
@@ -29,10 +30,13 @@ namespace BankShibaevaAnna322
         public string PhoneNumber { get; set; }
         public string SecondNumber { get; set; }
         public string Email { get; set; }
+        public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Accounts> Accounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Deposits> Deposits { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Users> Users { get; set; }
     }
 }

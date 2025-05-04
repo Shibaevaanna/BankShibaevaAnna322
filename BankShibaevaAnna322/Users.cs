@@ -18,7 +18,10 @@ namespace BankShibaevaAnna322
         public string UserLogin { get; set; }
         public string UserPassword { get; set; }
         public Nullable<int> RoleID { get; set; }
+        public bool IsAdmin { get; set; }
+        public Nullable<int> ClientID { get; set; }
     
         public virtual Roles Roles { get; set; }
+        public virtual Clients Clients { get; set; }
     }
 }

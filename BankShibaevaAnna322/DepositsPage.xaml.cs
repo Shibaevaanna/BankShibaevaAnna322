@@ -37,11 +37,11 @@ namespace BankShibaevaAnna322
             {
                 string selectedDuration = ((ComboBoxItem)FilterDuration.SelectedItem).Content.ToString();
                 int durationMonths = 0;
-                if (selectedDuration.Contains("месяц"))
-                {
-                    string numberPart = new string(selectedDuration.Where(char.IsDigit).ToArray());
-                    int.TryParse(numberPart, out durationMonths);
-                }
+                if (selectedDuration.Contains("3")) durationMonths = 3;
+                else if (selectedDuration.Contains("6")) durationMonths = 6;
+                else if (selectedDuration.Contains("12")) durationMonths = 12;
+                else if (selectedDuration.Contains("24")) durationMonths = 24;
+
                 deposits = deposits.Where(d => d.Duration == durationMonths).ToList();
             }
 
@@ -96,7 +96,7 @@ namespace BankShibaevaAnna322
             NavigationService.Navigate(new AddDepositPage());
         }
 
-        private void ButtonEditDeposit_OnClick(object sender, RoutedEventArgs e)
+        private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (DataGridDeposits.SelectedItem is Deposit deposit)
                 NavigationService.Navigate(new EditDepositPage(deposit));

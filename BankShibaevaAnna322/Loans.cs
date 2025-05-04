@@ -22,5 +22,10 @@ namespace BankShibaevaAnna322
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<int> ClientSalary { get; set; }
         public Nullable<int> PaymentAmount { get; set; }
+        public string LoanName { get; set; }
+        public string LoanSum { get; set; }
+        public Nullable<decimal> Amount { get; set; }
+        public string Status { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
     }
 }
