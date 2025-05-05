@@ -6,13 +6,13 @@ namespace BankShibaevaAnna322
 {
     public partial class DelCreditPage : Page
     {
-        private readonly Credit credit;
+        private readonly Loans _credit; // Изменен тип с Credit на Loans
 
-        public DelCreditPage(Credit credit)
+        public DelCreditPage(Loans credit) // Изменен параметр
         {
             InitializeComponent();
-            credit = Entities.GetContext().Loans.Find(credit.Id);
-            if (credit == null)
+            _credit = Entities.GetContext().Loans.Find(credit.LoanID); // Исправлено на Loans
+            if (_credit == null)
             {
                 MessageBox.Show("Кредит не найден");
                 NavigationService.GoBack();
@@ -23,7 +23,7 @@ namespace BankShibaevaAnna322
         {
             try
             {
-                Entities.GetContext().Credits.Remove(credit);
+                Entities.GetContext().Loans.Remove(_credit); // Исправлено на Loans
                 Entities.GetContext().SaveChanges();
                 MessageBox.Show("Кредит удалён", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationService.GoBack();

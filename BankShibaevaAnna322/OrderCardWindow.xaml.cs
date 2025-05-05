@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BankShibaevaAnna322
 {
@@ -52,14 +52,13 @@ namespace BankShibaevaAnna322
 
             using (var db = new Entities())
             {
-                // Генерация номера карты (упрощенный вариант)
                 Random random = new Random();
                 long cardNumber = 4000000000000000 + random.Next(0, 999999999);
 
                 var newCard = new Cards
                 {
                     AccountID = account.AccountID,
-                    CardNumber = cardNumber.ToString(),
+                    CardNumber = (int)cardNumber, // Явное приведение типа
                     CardType = cardType,
                     ExpiryDate = DateTime.Now.AddYears(3),
                     CardStatus = "Активна",

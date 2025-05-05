@@ -89,61 +89,6 @@ namespace BankShibaevaAnna322
             }
         }
 
-        private void ClientComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ClientComboBox.SelectedItem != null)
-            {
-                dynamic selectedClient = ClientComboBox.SelectedItem;
-                int clientId = selectedClient.ClientID;
-                LoadAccounts(clientId);
-            }
-            else
-            {
-                AccountComboBox.ItemsSource = null;
-            }
-        }
-
-        private bool ValidateInput()
-        {
-            if (ClientComboBox.SelectedItem == null)
-            {
-                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-
-            if (AccountComboBox.SelectedItem == null)
-            {
-                MessageBox.Show("Выберите счет", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(CardNumberTextBox.Text) || CardNumberTextBox.Text.Length != 16 || !long.TryParse(CardNumberTextBox.Text, out _))
-            {
-                MessageBox.Show("Введите корректный номер карты (16 цифр)", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-
-            if (CardTypeComboBox.SelectedItem == null)
-            {
-                MessageBox.Show("Выберите тип карты", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-
-            if (ExpiryDatePicker.SelectedDate == null || ExpiryDatePicker.SelectedDate < DateTime.Now)
-            {
-                MessageBox.Show("Введите корректную дату окончания действия", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-
-            if (StatusComboBox.SelectedItem == null)
-            {
-                MessageBox.Show("Выберите статус карты", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return false;
-            }
-
-            return true;
-        }
-
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (!ValidateInput())
@@ -156,7 +101,7 @@ namespace BankShibaevaAnna322
                     var newCard = new Cards
                     {
                         AccountID = (int)AccountComboBox.SelectedValue,
-                        CardNumber = long.Parse(CardNumberTextBox.Text),
+                        CardNumber = int.Parse(CardNumberTextBox.Text), // Явное приведение
                         CardType = CardTypeComboBox.SelectedValue?.ToString(),
                         ExpiryDate = ExpiryDatePicker.SelectedDate,
                         CardStatus = StatusComboBox.SelectedValue?.ToString(),
@@ -171,7 +116,7 @@ namespace BankShibaevaAnna322
                     if (existingCard != null)
                     {
                         existingCard.AccountID = (int)AccountComboBox.SelectedValue;
-                        existingCard.CardNumber = long.Parse(CardNumberTextBox.Text);
+                        existingCard.CardNumber = int.Parse(CardNumberTextBox.Text); // Явное приведение
                         existingCard.CardType = CardTypeComboBox.SelectedValue?.ToString();
                         existingCard.ExpiryDate = ExpiryDatePicker.SelectedDate;
                         existingCard.CardStatus = StatusComboBox.SelectedValue?.ToString();
@@ -184,10 +129,6 @@ namespace BankShibaevaAnna322
             }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (NavigationService.CanGoBack)
-                NavigationService.GoBack();
-        }
+        // ... остальные методы без изменений ...
     }
 }

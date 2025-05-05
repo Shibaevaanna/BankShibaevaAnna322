@@ -24,7 +24,7 @@ namespace BankShibaevaAnna322
                 _card = db.Cards.Find(_cardId);
                 if (_card != null)
                 {
-                    CardNumberText.Text = _card.CardNumber;
+                    CardNumberText.Text = _card.CardNumber.ToString(); // Исправлено преобразование int в string
                     CardTypeText.Text = _card.CardType;
                     OwnerText.Text = $"{_card.OwnerLastName} {_card.OwnerFirstName}";
                     ExpiryDateText.Text = _card.ExpiryDate?.ToString("MM/yy");

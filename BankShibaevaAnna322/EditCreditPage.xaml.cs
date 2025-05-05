@@ -6,13 +6,13 @@ namespace BankShibaevaAnna322
 {
     public partial class EditCreditPage : Page
     {
-        private readonly Credit credit;
+        private readonly Loans _credit;
 
-        public EditCreditPage(Credit credit)
+        public EditCreditPage(Loans credit) // Изменен тип с Credit на Loans
         {
             InitializeComponent();
-            credit = Entities.GetContext().Credits.Find(credit.Id);
-            if (credit == null)
+            _credit = Entities.GetContext().Loans.Find(credit.LoanID); // Исправлено на Loans
+            if (_credit == null)
             {
                 MessageBox.Show("Кредит не найден");
                 NavigationService.GoBack();
@@ -23,22 +23,22 @@ namespace BankShibaevaAnna322
 
         private void LoadData()
         {
-            TextBoxName.Text = credit.NameOfLoan;
-            TextBoxAmount.Text = credit.Amount.ToString();
-            TextBoxInterestRate.Text = credit.InterestRate.ToString();
-            TextBoxDuration.Text = credit.Duration.ToString();
-            TextBoxDescription.Text = credit.Description;
+            TextBoxName.Text = _credit.LoanName;
+            TextBoxAmount.Text = _credit.Amount.ToString();
+            TextBoxInterestRate.Text = _credit.InterestRate.ToString();
+            TextBoxDuration.Text = _credit.CreditTerm.ToString();
+            TextBoxDescription.Text = _credit.LoanType;
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                credit.NameOfLoan = TextBoxName.Text;
-                credit.Amount = decimal.Parse(TextBoxAmount.Text);
-                credit.InterestRate = double.Parse(TextBoxInterestRate.Text);
-                credit.Duration = int.Parse(TextBoxDuration.Text);
-                credit.Description = TextBoxDescription.Text;
+                _credit.LoanName = TextBoxName.Text;
+                _credit.Amount = decimal.Parse(TextBoxAmount.Text);
+                _credit.InterestRate = double.Parse(TextBoxInterestRate.Text);
+                _credit.CreditTerm = int.Parse(TextBoxDuration.Text);
+                _credit.LoanType = TextBoxDescription.Text;
 
                 Entities.GetContext().SaveChanges();
 
@@ -57,4 +57,3 @@ namespace BankShibaevaAnna322
         }
     }
 }
-

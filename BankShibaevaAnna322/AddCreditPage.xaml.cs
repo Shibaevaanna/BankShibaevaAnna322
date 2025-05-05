@@ -7,20 +7,19 @@ namespace BankShibaevaAnna322
 {
     public partial class AddCreditPage : Page
     {
-        private Credit _credit = new Credit();
+        private readonly Loans _loan = new Loans(); // Исправлено имя и тип
 
         public AddCreditPage()
         {
             InitializeComponent();
-            DataContext = _credit; // Устанавливаем контекст данных для привязки
+            DataContext = _loan;
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             var errors = new StringBuilder();
 
-            // Валидация полей ввода
-            if (string.IsNullOrWhiteSpace(_credit.NameOfLoan))
+            if (string.IsNullOrWhiteSpace(_loan.LoanName))
                 errors.AppendLine("Введите название кредита");
 
             if (string.IsNullOrWhiteSpace(TextBoxAmount.Text) || !decimal.TryParse(TextBoxAmount.Text, out _))
@@ -40,11 +39,10 @@ namespace BankShibaevaAnna322
 
             try
             {
-                
-                _credit.Amount = decimal.Parse(TextBoxAmount.Text);
-                _credit.InterestRate = double.Parse(TextBoxInterestRate.Text);
-                _credit.Duration = int.Parse(TextBoxDuration.Text);
-                _credit.Description = TextBoxDescription.Text;
+                _loan.Amount = decimal.Parse(TextBoxAmount.Text);
+                _loan.InterestRate = (int)double.Parse(TextBoxInterestRate.Text); // Явное приведение
+                _loan.CreditTerm = int.Parse(TextBoxDuration.Text);
+                _loan.LoanType = TextBoxDescription.Text;
 
                 Entities.GetContext().Loans.Add(_loan);
                 Entities.GetContext().SaveChanges();
@@ -64,4 +62,3 @@ namespace BankShibaevaAnna322
         }
     }
 }
-

@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,13 +21,12 @@ namespace BankShibaevaAnna322
                 return;
             }
             DataContext = _card;
+            CardNumberText.Text = _card.CardNumber.ToString(); // Исправлено преобразование int в string
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             var errors = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(_card.CardNumber))
-                errors.AppendLine("Введите номер карты");
             if (string.IsNullOrWhiteSpace(_card.CardType))
                 errors.AppendLine("Введите тип карты");
             if (string.IsNullOrWhiteSpace(_card.CardStatus))

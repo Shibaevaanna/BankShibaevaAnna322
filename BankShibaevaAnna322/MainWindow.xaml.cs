@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using System.Windows.Controls;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace BankShibaevaAnna322
 {
@@ -11,7 +11,10 @@ namespace BankShibaevaAnna322
         public MainWindow()
         {
             InitializeComponent();
+            passwordBox = this.FindName("passwordBox") as PasswordBox; // Добавлена инициализация
         }
+
+        private PasswordBox passwordBox; // Добавлено поле
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {

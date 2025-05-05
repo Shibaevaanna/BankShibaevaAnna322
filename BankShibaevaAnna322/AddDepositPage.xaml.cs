@@ -7,29 +7,28 @@ namespace BankShibaevaAnna322
 {
     public partial class AddDepositPage : Page
     {
-        private Deposit deposit = new Deposit();
+        private readonly Deposits _deposit = new Deposits(); // Исправлен тип
 
         public AddDepositPage()
         {
             InitializeComponent();
-            DataContext = deposit;
+            DataContext = _deposit;
         }
 
         private void ButtonSaveClick(object sender, RoutedEventArgs e)
         {
             var errors = new StringBuilder();
 
-            
-            if (string.IsNullOrWhiteSpace(deposit.NameOfDeposit))
+            if (string.IsNullOrWhiteSpace(_deposit.NameOfDeposit))
                 errors.AppendLine("Введите название вклада");
 
-            if (deposit.Amount <= 0)
+            if (_deposit.Amount <= 0)
                 errors.AppendLine("Введите корректную сумму");
 
-            if (deposit.InterestRate <= 0)
+            if (_deposit.InterestRate <= 0)
                 errors.AppendLine("Введите корректную процентную ставку");
 
-            if (deposit.Duration <= 0)
+            if (_deposit.Duration <= 0)
                 errors.AppendLine("Введите корректный срок");
 
             if (errors.Length > 0)
@@ -40,8 +39,7 @@ namespace BankShibaevaAnna322
 
             try
             {
-                
-                Entities.GetContext().Deposits.Add(deposit);
+                Entities.GetContext().Deposits.Add(_deposit);
                 Entities.GetContext().SaveChanges();
                 MessageBox.Show("Вклад добавлен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationService.GoBack();

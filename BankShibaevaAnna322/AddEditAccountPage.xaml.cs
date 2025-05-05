@@ -7,10 +7,10 @@ namespace BankShibaevaAnna322
 {
     public partial class AddEditAccountPage : Page
     {
-        private int? _accountId;
+        private readonly int? _accountId;
         private Accounts _account;
 
-        public string Title => _accountId == null ? "Добавление счета" : "Редактирование счета";
+        public new string Title => _accountId == null ? "Добавление счета" : "Редактирование счета"; // Добавлено new
 
         public AddEditAccountPage(int? accountId = null)
         {
@@ -115,27 +115,25 @@ namespace BankShibaevaAnna322
             {
                 if (_accountId == null)
                 {
-                    // Добавление нового счета
                     _account = new Accounts
                     {
                         ClientID = (int)ClientComboBox.SelectedValue,
                         AccountNumber = int.Parse(AccountNumberTextBox.Text),
                         AccountType = ((AccountTypes)AccountTypeComboBox.SelectedItem).AccountType,
-                        Balance = decimal.Parse(BalanceTextBox.Text),
+                        Balance = (int)decimal.Parse(BalanceTextBox.Text), // Явное приведение
                         AccountStatus = ((ComboBoxItem)StatusComboBox.SelectedItem).Content.ToString()
                     };
                     db.Accounts.Add(_account);
                 }
                 else
                 {
-                    // Редактирование существующего счета
                     _account = db.Accounts.Find(_accountId);
                     if (_account != null)
                     {
                         _account.ClientID = (int)ClientComboBox.SelectedValue;
                         _account.AccountNumber = int.Parse(AccountNumberTextBox.Text);
                         _account.AccountType = ((AccountTypes)AccountTypeComboBox.SelectedItem).AccountType;
-                        _account.Balance = decimal.Parse(BalanceTextBox.Text);
+                        _account.Balance = (int)decimal.Parse(BalanceTextBox.Text); // Явное приведение
                         _account.AccountStatus = ((ComboBoxItem)StatusComboBox.SelectedItem).Content.ToString();
                     }
                 }

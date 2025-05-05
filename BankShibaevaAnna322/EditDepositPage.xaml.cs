@@ -7,36 +7,34 @@ namespace BankShibaevaAnna322
 {
     public partial class EditDepositPage : Page
     {
-        private Deposit deposit; // Объявляем переменную deposit
+        private Deposits _deposit; // Изменен тип с Deposit на Deposits
 
-        public EditDepositPage(Deposit deposit)
+        public EditDepositPage(Deposits deposit) // Изменен параметр
         {
             InitializeComponent();
-            // Ищем вклад по Id
-            this.deposit = Entities.GetContext().Deposits.Find(deposit.Id);
-            if (this.deposit == null)
+            _deposit = Entities.GetContext().Deposits.Find(deposit.DepositID);
+            if (_deposit == null)
             {
                 MessageBox.Show("Вклад не найден");
                 NavigationService.GoBack();
                 return;
             }
-            DataContext = this.deposit; // Устанавливаем контекст данных
+            DataContext = _deposit;
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             var errors = new StringBuilder();
-            // Используем правильное имя переменной deposit
-            if (string.IsNullOrWhiteSpace(deposit.NameOfDeposit))
+            if (string.IsNullOrWhiteSpace(_deposit.NameOfDeposit))
                 errors.AppendLine("Введите название вклада");
 
-            if (deposit.Amount <= 0)
+            if (_deposit.Amount <= 0)
                 errors.AppendLine("Введите корректную сумму");
 
-            if (deposit.InterestRate <= 0)
+            if (_deposit.InterestRate <= 0)
                 errors.AppendLine("Введите корректную процентную ставку");
 
-            if (deposit.Duration <= 0)
+            if (_deposit.Duration <= 0)
                 errors.AppendLine("Введите корректный срок");
 
             if (errors.Length > 0)
@@ -47,7 +45,7 @@ namespace BankShibaevaAnna322
 
             try
             {
-                Entities.GetContext().SaveChanges(); // Сохраняем изменения в базе данных
+                Entities.GetContext().SaveChanges();
                 MessageBox.Show("Изменения сохранены", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationService.GoBack();
             }
