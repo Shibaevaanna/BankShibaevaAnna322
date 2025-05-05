@@ -36,7 +36,7 @@ namespace BankShibaevaAnna322
         {
             using (var db = new Entities())
             {
-                var creditsQuery = db.Loans.Include("Clients").AsQueryable();
+                var creditsQuery = db.Loans.AsQueryable();
 
                 if (clientId != null)
                 {
@@ -49,17 +49,20 @@ namespace BankShibaevaAnna322
                 }
 
                 var credits = creditsQuery
-                    .Select(c => new
-                    {
-                        c.LoanID,
-                        ClientFullName = c.Clients.LastName + " " + c.Clients.FirstName + " " + c.Clients.Patronymic,
-                        c.LoanType,
-                        c.Amount,
-                        c.InterestRate,
-                        Duration = c.CreditTerm,
-                        c.StartDate,
-                        Status = c.Status
-                    })
+                    .Join(db.Clients,
+                        loan => loan.ClientID,
+                        client => client.ClientID,
+                        (loan, client) => new
+                        {
+                            loan.LoanID,
+                            ClientFullName = client.LastName + " " + client.FirstName + " " + client.Patronymic,
+                            loan.LoanType,
+                            loan.Amount,
+                            loan.InterestRate,
+                            Duration = loan.CreditTerm,
+                            loan.StartDate,
+                            Status = loan.Status
+                        })
                     .ToList();
 
                 CreditsDataGrid.ItemsSource = credits;
@@ -126,7 +129,6 @@ namespace BankShibaevaAnna322
                         var credit = db.Loans.Find(creditId);
                         if (credit != null)
                         {
-                            // Проверяем, есть ли платежи по кредиту
                             bool hasPayments = db.LoanPayments.Any(p => p.LoanID == creditId);
 
                             if (hasPayments)

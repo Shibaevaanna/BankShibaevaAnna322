@@ -6,12 +6,12 @@ namespace BankShibaevaAnna322
 {
     public partial class DelDepositPage : Page
     {
-        private Deposit _deposit;
+        private Deposits _deposit;
 
-        public DelDepositPage(Deposit deposit)
+        public DelDepositPage(Deposits deposit)
         {
             InitializeComponent();
-            _deposit = Entities.GetContext().Deposits.Find(deposits.Id);
+            _deposit = Entities.GetContext().Deposits.Find(deposit.DepositID);
             if (_deposit == null)
             {
                 MessageBox.Show("Вклад не найден");
@@ -23,8 +23,9 @@ namespace BankShibaevaAnna322
         {
             try
             {
-                Entities.GetContext().Deposits.Remove(_deposit);
-                Entities.GetContext().SaveChanges();
+                var context = Entities.GetContext();
+                context.Deposits.Remove(_deposit);
+                context.SaveChanges();
                 MessageBox.Show("Вклад удалён", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
                 NavigationService.GoBack();
             }

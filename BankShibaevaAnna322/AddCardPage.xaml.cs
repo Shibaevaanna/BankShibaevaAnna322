@@ -7,8 +7,8 @@ namespace BankShibaevaAnna322
 {
     public partial class AddCardPage : Page
     {
-        private Cards _card = new Cards();
-        
+        private readonly Cards _card = new Cards();
+
         public AddCardPage()
         {
             InitializeComponent();
@@ -19,7 +19,7 @@ namespace BankShibaevaAnna322
         {
             var errors = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(_card.CardNumber))
+            if (_card.CardNumber == null || _card.CardNumber == 0)
                 errors.AppendLine("Введите номер карты");
 
             if (string.IsNullOrWhiteSpace(_card.CardType))
@@ -39,7 +39,8 @@ namespace BankShibaevaAnna322
                 Entities.GetContext().Cards.Add(_card);
                 Entities.GetContext().SaveChanges();
                 MessageBox.Show("Новая карта добавлена", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-                NavigationService.GoBack();
+                if (NavigationService.CanGoBack)
+                    NavigationService.GoBack();
             }
             catch (Exception ex)
             {
@@ -49,7 +50,8 @@ namespace BankShibaevaAnna322
 
         private void ButtonCancel_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            if (NavigationService.CanGoBack)
+                NavigationService.GoBack();
         }
     }
 }

@@ -2,7 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:BankShibaevaAnna322"
-        Title="Панель администратора" Height="600" Width="900" WindowStartupLocation="CenterScreen">
+        Title="Панель администратора" Height="720" Width="1100" 
+        WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip"
+        Background="{StaticResource BackgroundBrush}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -10,25 +12,82 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0" Background="{StaticResource PrimaryBrush}" Foreground="White">
-            <MenuItem Header="Управление">
-                <MenuItem Header="Клиенты" Click="ClientsMenuItem_Click"/>
-                <MenuItem Header="Счета" Click="AccountsMenuItem_Click"/>
-                <MenuItem Header="Карты" Click="CardsMenuItem_Click"/>
-                <MenuItem Header="Кредиты" Click="CreditsMenuItem_Click"/>
-                <MenuItem Header="Вклады" Click="DepositsMenuItem_Click"/>
-                <MenuItem Header="Сотрудники" Click="EmployeesMenuItem_Click"/>
-                <MenuItem Header="Филиалы" Click="BranchesMenuItem_Click"/>
-            </MenuItem>
-            <MenuItem Header="Выход" Click="LogoutMenuItem_Click"/>
-        </Menu>
+        <!-- Header Section -->
+        <Border Grid.Row="0" Background="{StaticResource PrimaryBrush}" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Панель администратора" 
+                          Style="{StaticResource HeaderTextStyle}" 
+                          Foreground="White" Margin="0,0,20,0"/>
+                <TextBlock Text="(Выберите нужный раздел)" 
+                          Style="{StaticResource SubHeaderTextStyle}" 
+                          Foreground="{StaticResource AccentBrush}"/>
+            </StackPanel>
+        </Border>
 
-        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Navigation Menu -->
+            <Border Grid.Column="0" Background="{StaticResource SecondaryBrush}" 
+                    CornerRadius="0,10,0,0" Margin="0,0,5,0">
+                <StackPanel>
+                    <TextBlock Text="Управление" 
+                              Style="{StaticResource SubHeaderTextStyle}" 
+                              Foreground="White" Margin="10,20,10,10"
+                              HorizontalAlignment="Center"/>
+
+                    <Button Content="Клиенты" Style="{StaticResource CustomButtonStyle}" 
+                            Margin="10,5" Height="40" Click="ClientsMenuItem_Click"
+                            HorizontalAlignment="Center" Width="160"/>
+                    <Button Content="Счета" Style="{StaticResource CustomButtonStyle}" 
+                            Margin="10,5" Height="40" Click="AccountsMenuItem_Click"
+                            HorizontalAlignment="Center" Width="160"/>
+                    <Button Content="Карты" Style="{StaticResource CustomButtonStyle}" 
+                            Margin="10,5" Height="40" Click="CardsMenuItem_Click"
+                            HorizontalAlignment="Center" Width="160"/>
+                    <Button Content="Кредиты" Style="{StaticResource CustomButtonStyle}" 
+                            Margin="10,5" Height="40" Click="CreditsMenuItem_Click"
+                            HorizontalAlignment="Center" Width="160"/>
+                    <Button Content="Вклады" Style="{StaticResource CustomButtonStyle}" 
+                            Margin="10,5" Height="40" Click="DepositsMenuItem_Click"
+                            HorizontalAlignment="Center" Width="160"/>
+                    <Button Content="Сотрудники" Style="{StaticResource CustomButtonStyle}" 
+                            Margin="10,5" Height="40" Click="EmployeesMenuItem_Click"
+                            HorizontalAlignment="Center" Width="160"/>
+                    <Button Content="Филиалы" Style="{StaticResource CustomButtonStyle}" 
+                            Margin="10,5" Height="40" Click="BranchesMenuItem_Click"
+                            HorizontalAlignment="Center" Width="160"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Content Frame -->
+            <Border Grid.Column="1" Background="White" CornerRadius="10,0,0,0" 
+                    BorderBrush="{StaticResource SecondaryBrush}" BorderThickness="1">
+                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" 
+                       Background="Transparent"/>
+            </Border>
+        </Grid>
+
+        <!-- Footer -->
+        <Border Grid.Row="2" Background="{StaticResource PrimaryBrush}" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Выход" Style="{StaticResource CustomButtonStyle}" 
+                        Width="120" Height="35" Margin="5,0" Click="LogoutMenuItem_Click"/>
+                <TextBlock Text="{Binding CurrentDateTime}" Style="{StaticResource BodyTextStyle}" 
+                          Foreground="White" VerticalAlignment="Center" Margin="20,0,10,0"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

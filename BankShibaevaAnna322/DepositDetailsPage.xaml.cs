@@ -55,10 +55,9 @@ namespace BankShibaevaAnna322
                         }
 
                         // Рассчитываем сумму с процентами
-                        double monthsPassed = (DateTime.Now - deposit.StartDate).TotalDays / 30;
-                        double interestAmount = deposit.Amount * deposit.InterestRate / 100 * monthsPassed / 12;
-                        int totalAmount = deposit.Amount + (int)interestAmount;
-
+                        double monthsPassed = (DateTime.Now - deposit.StartDate).Value.TotalDays / 30;
+                        decimal interestAmount = deposit.Amount.Value * (decimal)(deposit.InterestRate / 100.0) * (decimal)(monthsPassed / 12);
+                        int totalAmount = (int)(deposit.Amount.Value + interestAmount);
                         // Возвращаем средства на счет
                         clientAccount.Balance += totalAmount;
 

@@ -20,7 +20,9 @@ namespace BankShibaevaAnna322
         public string TransactionType { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public Nullable<System.DateTime> TransactionDate { get; set; }
+        public Nullable<int> RelatedAccountID { get; set; }
     
         public virtual Accounts Accounts { get; set; }
+        public virtual Accounts Accounts1 { get; set; }
     }
 }

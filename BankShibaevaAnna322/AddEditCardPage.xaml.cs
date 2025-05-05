@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,10 +9,10 @@ namespace BankShibaevaAnna322
 {
     public partial class AddEditCardPage : Page
     {
-        private int? _cardId;
-        private Cards _card;
+        private readonly int? _cardId;
+        private Cards _currentCard;
 
-        public string Title => _cardId == null ? "Добавление карты" : "Редактирование карты";
+        public new string Title => _cardId == null ? "Добавление карты" : "Редактирование карты";
 
         public AddEditCardPage(int? cardId = null)
         {
@@ -65,21 +66,25 @@ namespace BankShibaevaAnna322
             {
                 using (var db = new Entities())
                 {
-                    _card = db.Cards.Include("Accounts").Find(_cardId);
-                    if (_card != null)
+                    _currentCard = db.Cards.Include(c => c.Accounts).FirstOrDefault(c => c.CardID == _cardId);
+                    if (_currentCard != null)
                     {
-                        ClientComboBox.SelectedValue = _card.Accounts.ClientID;
-                        LoadAccounts(_card.Accounts.ClientID);
-                        AccountComboBox.SelectedValue = _card.AccountID;
-                        CardNumberTextBox.Text = _card.CardNumber;
-                        CardTypeComboBox.SelectedValue = _card.CardType;
-                        ExpiryDatePicker.SelectedDate = _card.ExpiryDate;
-                        StatusComboBox.SelectedValue = _card.CardStatus;
+                        ClientComboBox.SelectedValue = _currentCard.Accounts?.ClientID;
+                        if (_currentCard.Accounts != null)
+                        {
+                            LoadAccounts(_currentCard.Accounts.ClientID.Value);
+                        }
+                        AccountComboBox.SelectedValue = _currentCard.AccountID;
+                        CardNumberTextBox.Text = _currentCard.CardNumber?.ToString();
+                        CardTypeComboBox.SelectedValue = _currentCard.CardType;
+                        ExpiryDatePicker.SelectedDate = _currentCard.ExpiryDate;
+                        StatusComboBox.SelectedValue = _currentCard.CardStatus;
                     }
                 }
             }
             else
             {
+                _currentCard = new Cards();
                 ExpiryDatePicker.SelectedDate = DateTime.Now.AddYears(3);
             }
         }
@@ -148,30 +153,28 @@ namespace BankShibaevaAnna322
             {
                 if (_cardId == null)
                 {
-                    // Добавление новой карты
-                    _card = new Cards
+                    var newCard = new Cards
                     {
                         AccountID = (int)AccountComboBox.SelectedValue,
-                        CardNumber = CardNumberTextBox.Text,
-                        CardType = ((ComboBoxItem)CardTypeComboBox.SelectedItem).Content.ToString(),
+                        CardNumber = long.Parse(CardNumberTextBox.Text),
+                        CardType = CardTypeComboBox.SelectedValue?.ToString(),
                         ExpiryDate = ExpiryDatePicker.SelectedDate,
-                        CardStatus = ((ComboBoxItem)StatusComboBox.SelectedItem).Content.ToString(),
+                        CardStatus = StatusComboBox.SelectedValue?.ToString(),
                         OwnerFirstName = ((dynamic)ClientComboBox.SelectedItem).FullName.Split(' ')[1],
                         OwnerLastName = ((dynamic)ClientComboBox.SelectedItem).FullName.Split(' ')[0]
                     };
-                    db.Cards.Add(_card);
+                    db.Cards.Add(newCard);
                 }
                 else
                 {
-                    // Редактирование существующей карты
-                    _card = db.Cards.Find(_cardId);
-                    if (_card != null)
+                    var existingCard = db.Cards.FirstOrDefault(c => c.CardID == _cardId);
+                    if (existingCard != null)
                     {
-                        _card.AccountID = (int)AccountComboBox.SelectedValue;
-                        _card.CardNumber = CardNumberTextBox.Text;
-                        _card.CardType = ((ComboBoxItem)CardTypeComboBox.SelectedItem).Content.ToString();
-                        _card.ExpiryDate = ExpiryDatePicker.SelectedDate;
-                        _card.CardStatus = ((ComboBoxItem)StatusComboBox.SelectedItem).Content.ToString();
+                        existingCard.AccountID = (int)AccountComboBox.SelectedValue;
+                        existingCard.CardNumber = long.Parse(CardNumberTextBox.Text);
+                        existingCard.CardType = CardTypeComboBox.SelectedValue?.ToString();
+                        existingCard.ExpiryDate = ExpiryDatePicker.SelectedDate;
+                        existingCard.CardStatus = StatusComboBox.SelectedValue?.ToString();
                     }
                 }
 
@@ -183,7 +186,8 @@ namespace BankShibaevaAnna322
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            if (NavigationService.CanGoBack)
+                NavigationService.GoBack();
         }
     }
 }

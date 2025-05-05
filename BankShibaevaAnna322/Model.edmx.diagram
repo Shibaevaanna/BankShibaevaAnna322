@@ -27,6 +27,7 @@
         <AssociationConnector Association="BankOperationsModel.FK__Deposits__Client__74AE54BC" ManuallyRouted="false" />
         <AssociationConnector Association="BankOperationsModel.FK__Users__RoleID__0E6E26BF" ManuallyRouted="false" />
         <AssociationConnector Association="BankOperationsModel.FK_Users_Clients" />
+        <AssociationConnector Association="BankOperationsModel.FK_Transactions_Accounts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

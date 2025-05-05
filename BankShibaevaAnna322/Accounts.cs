@@ -19,11 +19,12 @@ namespace BankShibaevaAnna322
         {
             this.Cards = new HashSet<Cards>();
             this.Transactions = new HashSet<Transactions>();
+            this.Transactions1 = new HashSet<Transactions>();
         }
     
         public int AccountID { get; set; }
         public Nullable<int> ClientID { get; set; }
-        public Nullable<int> AccountNumber { get; set; }
+        public int AccountNumber { get; set; }
         public string AccountType { get; set; }
         public Nullable<int> Balance { get; set; }
         public string AccountStatus { get; set; }
@@ -34,5 +35,7 @@ namespace BankShibaevaAnna322
         public virtual ICollection<Cards> Cards { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transactions> Transactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Transactions> Transactions1 { get; set; }
     }
 }

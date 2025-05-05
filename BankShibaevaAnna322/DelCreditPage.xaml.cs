@@ -11,7 +11,7 @@ namespace BankShibaevaAnna322
         public DelCreditPage(Credit credit)
         {
             InitializeComponent();
-            credit = Entities.GetContext().Credits.Find(credit.Id);
+            credit = Entities.GetContext().Loans.Find(credit.Id);
             if (credit == null)
             {
                 MessageBox.Show("Кредит не найден");

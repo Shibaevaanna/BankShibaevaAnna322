@@ -20,7 +20,7 @@
         <TextBlock Text="Управление клиентами" Grid.Row="0" Style="{StaticResource HeaderTextStyle}" Margin="0,0,0,20"/>
 
         <WrapPanel Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,20">
-            <TextBox x:Name="SearchTextBox" Width="200" Margin="0,0,10,0" Style="{StaticResource CustomTextBoxStyle}"/>
+            <TextBox x:Name="SearchTextBox" Width="447" Margin="0,0,10,0" Style="{StaticResource CustomTextBoxStyle}"/>
             <Button Content="Поиск" Width="80" Click="SearchButton_Click" Style="{StaticResource CustomButtonStyle}"/>
             <Button Content="Сброс" Width="80" Margin="10,0,0,0" Click="ResetButton_Click" Style="{StaticResource CustomButtonStyle}"/>
         </WrapPanel>

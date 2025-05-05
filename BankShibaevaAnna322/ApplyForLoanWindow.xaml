@@ -41,8 +41,8 @@
         <TextBlock x:Name="MonthlyPaymentText" Grid.Row="8" Style="{StaticResource BodyTextStyle}" Margin="0,0,0,20"/>
 
         <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="Оформить" Width="120" Margin="10" Click="ApplyButton_Click" Style="{StaticResource CustomButtonStyle}"/>
-            <Button Content="Отмена" Width="120" Margin="10" Click="CancelButton_Click" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Оформить" Width="120" Margin="10,37,10,-22" Click="ApplyButton_Click" Style="{StaticResource CustomButtonStyle}"/>
+            <Button Content="Отмена" Width="120" Margin="10,37,10,-22" Click="CancelButton_Click" Style="{StaticResource CustomButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Window>

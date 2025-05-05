@@ -11,7 +11,7 @@
           </Key>
           <Property Name="AccountID" Type="int" Nullable="false" />
           <Property Name="ClientID" Type="int" />
-          <Property Name="AccountNumber" Type="int" />
+          <Property Name="AccountNumber" Type="bigint" Nullable="false" />
           <Property Name="AccountType" Type="varchar" MaxLength="20" />
           <Property Name="Balance" Type="int" />
           <Property Name="AccountStatus" Type="varchar" MaxLength="20" />
@@ -31,7 +31,7 @@
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="BranchName" Type="varchar" MaxLength="30" />
           <Property Name="Address" Type="varchar" MaxLength="20" />
-          <Property Name="PhoneNumber" Type="int" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="50" />
           <Property Name="Id" Type="int" />
         </EntityType>
@@ -43,7 +43,7 @@
           <Property Name="AccountID" Type="int" />
           <Property Name="OwnerFirstName" Type="varchar" MaxLength="20" />
           <Property Name="OwnerLastName" Type="varchar" MaxLength="20" />
-          <Property Name="CardNumber" Type="int" />
+          <Property Name="CardNumber" Type="bigint" Nullable="false" />
           <Property Name="ExpiryDate" Type="date" />
           <Property Name="CardStatus" Type="varchar" MaxLength="20" />
           <Property Name="CardType" Type="varchar" MaxLength="20" />
@@ -57,8 +57,8 @@
           <Property Name="LastName" Type="varchar" MaxLength="20" />
           <Property Name="Patronymic" Type="varchar" MaxLength="20" />
           <Property Name="BirthdayDate" Type="date" />
-          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" />
-          <Property Name="SecondNumber" Type="varchar" MaxLength="20" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="SecondNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="30" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
         </EntityType>
@@ -153,6 +153,7 @@
           <Property Name="TransactionType" Type="varchar" MaxLength="20" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TransactionDate" Type="datetime" />
+          <Property Name="RelatedAccountID" Type="int" />
         </EntityType>
         <EntityType Name="TransactionTypes">
           <Key>
@@ -244,6 +245,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Transactions_Accounts">
+          <End Role="Accounts" Type="Self.Accounts" Multiplicity="0..1" />
+          <End Role="Transactions" Type="Self.Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="RelatedAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_Clients">
           <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -296,6 +309,10 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Accounts" Association="Self.FK_Transactions_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
           <AssociationSet Name="FK_Users_Clients" Association="Self.FK_Users_Clients">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Users" EntitySet="Users" />
@@ -311,7 +328,7 @@
           </Key>
           <Property Name="AccountID" Type="Int32" Nullable="false" />
           <Property Name="ClientID" Type="Int32" />
-          <Property Name="AccountNumber" Type="Int32" />
+          <Property Name="AccountNumber" Type="Int32" Nullable="false" />
           <Property Name="AccountType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Balance" Type="Int32" />
           <Property Name="AccountStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -319,6 +336,7 @@
           <NavigationProperty Name="Cards" Relationship="Self.FK__Cards__AccountID__71D1E811" FromRole="Accounts" ToRole="Cards" />
           <NavigationProperty Name="Transactions" Relationship="Self.FK__Transacti__Accou__49C3F6B7" FromRole="Accounts" ToRole="Transactions" />
           <Property Name="OpenDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Transactions1" Relationship="BankOperationsModel.FK_Transactions_Accounts" FromRole="Accounts" ToRole="Transactions" />
         </EntityType>
         <EntityType Name="AccountTypes">
           <Key>
@@ -334,7 +352,7 @@
           <Property Name="BranchID" Type="Int32" Nullable="false" />
           <Property Name="BranchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNumber" Type="Int32" />
+          <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__Branc__571DF1D5" FromRole="Branches" ToRole="Employees" />
           <Property Name="Id" Type="Int32" />
@@ -347,7 +365,7 @@
           <Property Name="AccountID" Type="Int32" />
           <Property Name="OwnerFirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="OwnerLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="CardNumber" Type="Int32" />
+          <Property Name="CardNumber" Type="Int32" Nullable="false" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="0" />
           <Property Name="CardStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Cards__AccountID__71D1E811" FromRole="Cards" ToRole="Accounts" />
@@ -362,8 +380,8 @@
           <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Patronymic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="BirthdayDate" Type="DateTime" Precision="0" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="SecondNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SecondNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Accounts__Client__440B1D61" FromRole="Clients" ToRole="Accounts" />
           <NavigationProperty Name="Deposits" Relationship="Self.FK__Deposits__Client__74AE54BC" FromRole="Clients" ToRole="Deposits" />
@@ -465,6 +483,8 @@
           <NavigationProperty Name="Accounts" Relationship="Self.FK__Transacti__Accou__49C3F6B7" FromRole="Transactions" ToRole="Accounts" />
           <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="TransactionDate" Type="DateTime" Precision="3" />
+          <Property Name="RelatedAccountID" Type="Int32" />
+          <NavigationProperty Name="Accounts1" Relationship="BankOperationsModel.FK_Transactions_Accounts" FromRole="Transactions" ToRole="Accounts" />
         </EntityType>
         <EntityType Name="TransactionTypes">
           <Key>
@@ -602,6 +622,10 @@
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Transactions_Accounts" Association="BankOperationsModel.FK_Transactions_Accounts">
+            <End Role="Accounts" EntitySet="Accounts" />
+            <End Role="Transactions" EntitySet="Transactions" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Users_Clients">
           <End Type="BankOperationsModel.Clients" Role="Clients" Multiplicity="0..1" />
@@ -612,6 +636,18 @@
             </Principal>
             <Dependent Role="Users">
               <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Transactions_Accounts">
+          <End Type="BankOperationsModel.Accounts" Role="Accounts" Multiplicity="0..1" />
+          <End Type="BankOperationsModel.Transactions" Role="Transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Accounts">
+              <PropertyRef Name="AccountID" />
+            </Principal>
+            <Dependent Role="Transactions">
+              <PropertyRef Name="RelatedAccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -774,6 +810,7 @@
           <EntitySetMapping Name="Transactions">
             <EntityTypeMapping TypeName="BankOperationsModel.Transactions">
               <MappingFragment StoreEntitySet="Transactions">
+                <ScalarProperty Name="RelatedAccountID" ColumnName="RelatedAccountID" />
                 <ScalarProperty Name="TransactionDate" ColumnName="TransactionDate" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />

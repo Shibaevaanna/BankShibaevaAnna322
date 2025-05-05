@@ -18,7 +18,7 @@ namespace BankShibaevaAnna322
         public Nullable<int> AccountID { get; set; }
         public string OwnerFirstName { get; set; }
         public string OwnerLastName { get; set; }
-        public Nullable<int> CardNumber { get; set; }
+        public int CardNumber { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public string CardStatus { get; set; }
         public string CardType { get; set; }
