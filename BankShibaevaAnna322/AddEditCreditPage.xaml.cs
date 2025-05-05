@@ -127,7 +127,7 @@ namespace BankShibaevaAnna322
                         ClientID = (int)ClientComboBox.SelectedValue,
                         LoanType = ((ComboBoxItem)LoanTypeComboBox.SelectedItem).Content.ToString(),
                         Amount = decimal.Parse(AmountTextBox.Text),
-                        InterestRate = double.Parse(InterestRateTextBox.Text),
+                        InterestRate = int.Parse(InterestRateTextBox.Text),
                         CreditTerm = int.Parse(DurationTextBox.Text),
                         StartDate = StartDatePicker.SelectedDate.Value,
                         Status = ((ComboBoxItem)StatusComboBox.SelectedItem).Content.ToString()
@@ -143,7 +143,7 @@ namespace BankShibaevaAnna322
                         _credit.ClientID = (int)ClientComboBox.SelectedValue;
                         _credit.LoanType = ((ComboBoxItem)LoanTypeComboBox.SelectedItem).Content.ToString();
                         _credit.Amount = decimal.Parse(AmountTextBox.Text);
-                        _credit.InterestRate = double.Parse(InterestRateTextBox.Text);
+                        _credit.InterestRate = int.Parse(InterestRateTextBox.Text);
                         _credit.CreditTerm = int.Parse(DurationTextBox.Text);
                         _credit.StartDate = StartDatePicker.SelectedDate.Value;
                         _credit.Status = ((ComboBoxItem)StatusComboBox.SelectedItem).Content.ToString();

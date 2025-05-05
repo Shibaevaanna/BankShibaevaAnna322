@@ -36,7 +36,7 @@ namespace BankShibaevaAnna322
             {
                 _credit.LoanName = TextBoxName.Text;
                 _credit.Amount = decimal.Parse(TextBoxAmount.Text);
-                _credit.InterestRate = double.Parse(TextBoxInterestRate.Text);
+                _credit.InterestRate = int.Parse(TextBoxInterestRate.Text);
                 _credit.CreditTerm = int.Parse(TextBoxDuration.Text);
                 _credit.LoanType = TextBoxDescription.Text;
 

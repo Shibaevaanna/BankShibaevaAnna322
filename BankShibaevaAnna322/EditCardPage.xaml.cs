@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,7 +20,7 @@ namespace BankShibaevaAnna322
                 return;
             }
             DataContext = _card;
-            CardNumberText.Text = _card.CardNumber.ToString(); // Исправлено преобразование int в string
+            CardNumber.Text = _card.CardNumber.ToString(); // Исправлено преобразование int в string
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)

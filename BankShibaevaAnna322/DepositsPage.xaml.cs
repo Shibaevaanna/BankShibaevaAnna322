@@ -36,12 +36,7 @@ namespace BankShibaevaAnna322
             if (FilterDuration.SelectedIndex > 0)
             {
                 string selectedDuration = ((ComboBoxItem)FilterDuration.SelectedItem).Content.ToString();
-                int durationMonths = 0;
-                if (selectedDuration.Contains("3")) durationMonths = 3;
-                else if (selectedDuration.Contains("6")) durationMonths = 6;
-                else if (selectedDuration.Contains("12")) durationMonths = 12;
-                else if (selectedDuration.Contains("24")) durationMonths = 24;
-
+                int durationMonths = int.Parse(selectedDuration.Split(' ')[0]);
                 deposits = deposits.Where(d => d.Duration == durationMonths).ToList();
             }
 
@@ -98,18 +93,18 @@ namespace BankShibaevaAnna322
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DataGridDeposits.SelectedItem is Deposit deposit)
+            if (DataGridDeposits.SelectedItem is Deposits deposit)
                 NavigationService.Navigate(new EditDepositPage(deposit));
             else
-                MessageBox.Show("Выберите вклад для редактирования");
+                MessageBox.Show("Выберите вклад для редактирования", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         private void ButtonDelDeposit_OnClick(object sender, RoutedEventArgs e)
         {
-            if (DataGridDeposits.SelectedItem is Deposit deposit)
+            if (DataGridDeposits.SelectedItem is Deposits deposit)
                 NavigationService.Navigate(new DelDepositPage(deposit));
             else
-                MessageBox.Show("Выберите вклад для удаления");
+                MessageBox.Show("Выберите вклад для удаления", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 }

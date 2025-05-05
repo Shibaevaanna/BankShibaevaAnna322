@@ -5,13 +5,13 @@
 
     <StackPanel>
         <Label Content="Номер карты:"/>
-        <TextBox Text="{Binding CardNumber, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
+        <TextBox x:Name="CardNumber" Text="{Binding CardNumber, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
         <Label Content="Тип карты:"/>
         <TextBox Text="{Binding CardType, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10"/>
         <Label Content="Состояние карты:"/>
         <TextBox Text="{Binding CardStatus, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,20"/>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Сохранить" Width="100" Margin="5" Click="ButtonSave_Click"/>
             <Button Content="Отмена" Width="100" Margin="5" Click="ButtonCancel_Click"/>
         </StackPanel>
