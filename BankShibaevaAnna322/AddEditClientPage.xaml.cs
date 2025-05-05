@@ -11,7 +11,7 @@ namespace BankShibaevaAnna322
         private int? _clientId;
         private Clients _client;
 
-        public string Title => _clientId == null ? "Добавление клиента" : "Редактирование клиента";
+        public new string Title => _clientId == null ? "Добавление клиента" : "Редактирование клиента";
 
         public AddEditClientPage(int? clientId = null)
         {

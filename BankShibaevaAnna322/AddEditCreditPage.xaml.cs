@@ -11,7 +11,7 @@ namespace BankShibaevaAnna322
         private int? _creditId;
         private Loans _credit;
 
-        public string Title => _creditId == null ? "Добавление кредита" : "Редактирование кредита";
+        public new string Title => _creditId == null ? "Добавление кредита" : "Редактирование кредита";
 
         public AddEditCreditPage(int? creditId = null)
         {
