@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -11,60 +12,88 @@ namespace BankShibaevaAnna322
         public MainWindow()
         {
             InitializeComponent();
-            passwordBox = this.FindName("passwordBox") as PasswordBox; // Добавлена инициализация
         }
-
-        private PasswordBox passwordBox; // Добавлено поле
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            string login = loginTextBox.Text.Trim();
-            string password = passwordBox.Password;
+            string login = loginTextBox?.Text?.Trim() ?? string.Empty;
+            string password = PasswordBox?.Password ?? string.Empty;
 
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            // Валидация ввода
+            if (string.IsNullOrEmpty(login))
             {
-                MessageBox.Show("Введите логин и пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Введите логин", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                loginTextBox.Focus();
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Введите пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+                PasswordBox.Focus();
                 return;
             }
 
             string hashedPassword = GetHash(password);
 
-            using (var db = new Entities())
+            try
             {
-                var user = db.Users.Include("Roles").FirstOrDefault(u => u.UserLogin == login && u.UserPassword == hashedPassword);
-
-                if (user == null)
+                using (var db = new Entities())
                 {
-                    MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                    var user = db.Users.Include("Roles")
+                                .FirstOrDefault(u => u.UserLogin == login && u.UserPassword == hashedPassword);
 
-                if (user.Roles.RoleName == "Администратор")
-                {
-                    var adminDashboard = new AdminDashboard();
-                    adminDashboard.Show();
+                    if (user == null)
+                    {
+                        MessageBox.Show("Неверный логин или пароль", "Ошибка",
+                                      MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    if (user.Roles == null)
+                    {
+                        MessageBox.Show("Ошибка: для пользователя не назначена роль",
+                                      "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    Window newWindow = null;
+
+                    switch (user.Roles.RoleName)
+                    {
+                        case "Администратор":
+                            newWindow = new AdminDashboard();
+                            break;
+                        case "Пользователь":
+                            newWindow = new UserDashboard(user.UserID);
+                            break;
+                        default:
+                            MessageBox.Show("Неизвестная роль пользователя",
+                                          "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                    }
+
+                    newWindow.Show();
                     this.Close();
                 }
-                else if (user.Roles.RoleName == "Пользователь")
-                {
-                    var userDashboard = new UserDashboard(user.UserID);
-                    userDashboard.Show();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Неизвестная роль пользователя", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при авторизации: {ex.Message}",
+                              "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private string GetHash(string input)
+        private static string GetHash(string input)
         {
+            if (string.IsNullOrEmpty(input))
+                return string.Empty;
+
             using (SHA256 sha256 = SHA256.Create())
             {
-                var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
-                var builder = new StringBuilder();
-                foreach (var b in bytes)
+                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+                StringBuilder builder = new StringBuilder();
+                foreach (byte b in bytes)
                     builder.Append(b.ToString("x2"));
                 return builder.ToString();
             }
