@@ -34,6 +34,23 @@ namespace BankShibaevaAnna322
                 return;
             }
 
+            // Проверка хардкодных учетных данных
+            if (login == "admin" && password == "admin123")
+            {
+                new AdminDashboard().Show();
+                this.Close();
+                return;
+            }
+
+            if (login == "user" && password == "user123")
+            {
+                // Создаем фиктивный ID пользователя (например, -1) для хардкодного входа
+                new UserDashboard(-1).Show();
+                this.Close();
+                return;
+            }
+
+            // Если это не хардкодные учетные данные, проверяем базу данных
             string hashedPassword = GetHash(password);
 
             try
